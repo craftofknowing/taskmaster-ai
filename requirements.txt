@@ -1,0 +1,7 @@
+# requirements.txt
+ibm-watson
+python-dotenv
+
+# .env
+WATSON_API_KEY=your_api_key
+WATSON_URL=your_service_url

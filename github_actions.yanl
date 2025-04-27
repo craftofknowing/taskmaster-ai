@@ -1,0 +1,16 @@
+name: Deploy Taskmaster
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+    - run: npm install
+    - run: npm run build
+    - uses: actions/upload-pages-artifact@v2
+      with:
+        path: build/
+
