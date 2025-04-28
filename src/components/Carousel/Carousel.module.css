@@ -1,0 +1,43 @@
+.mainC {
+  gap: 16px;
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 1%,
+    black 99%,
+    transparent
+  );
+}
+
+.imageContainer {
+  gap: 16px;
+  display: flex;
+  animation: scroll-x 20s linear infinite;
+
+  align-items: center;
+  flex-shrink: 0;
+  justify-content: space-around;
+}
+
+.image {
+  width: 400px;
+  height: 400px;
+  transition: 0.3s;
+  overflow-clip-margin: content-box;
+  overflow: clip;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  border-radius: 2px;
+}
+
+@keyframes scroll-x {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% - 16px));
+  }
+}

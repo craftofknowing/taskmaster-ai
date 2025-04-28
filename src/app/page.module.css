@@ -1,0 +1,132 @@
+.homeHero {
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homeContainer {
+  padding-top: 16px;
+  width: 100%;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  background: #141a22;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 1.15;
+  color: #ffffff;
+}
+
+.homeHeader {
+  gap: 48px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: center;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+.heroColumn {
+  padding: 80px;
+  gap: 24px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 16px;
+}
+
+.heroContent {
+  gap: 24px;
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  flex-direction: column;
+}
+
+.heroText1 {
+  font-size: 48px;
+  font-family: Roboto !important;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.heroText2 {
+  font-size: 18px;
+  font-family: Roboto;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.heroActions {
+  gap: 16px;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 16px;
+}
+
+.heroButton {
+  fill: #fff;
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  background-color: #0077e5;
+  border-width: 1px;
+  border-color: #0077e5;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 24px;
+  font-weight: bold;
+  transition: all 0.3s;
+  display: flex;
+}
+
+.heroButton:hover {
+  fill: #bbbbbb;
+  color: #bbbbbb;
+  border-color: #004f98;
+  background-color: #004f98;
+  transition: 0.3s;
+}
+
+.buttonText {
+  font-size: 16px;
+  font-family: Roboto;
+  line-height: 1.5;
+}
+
+.heroButton1 {
+  fill: #0077e5;
+  color: #0077e5;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #0077e5;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 24px;
+  font-weight: bold;
+  transition: all 0.3s;
+  display: flex;
+}
+
+.heroButton1:hover {
+  fill: #bbbbbb;
+  color: #bbbbbb;
+  border-color: #004f98;
+  background-color: #004f98;
+  transition: 0.3s;
+}
