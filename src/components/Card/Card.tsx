@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { CSSProperties } from "react";
+import Link from "next/link";
 import styles from "./Card.module.css";
 
 const Card = () => {
@@ -14,7 +14,9 @@ const Card = () => {
           Sign up now and start assigning tasks with ease!
         </p>
       </div>
-      <button className={styles.cardAction}> Sign Up</button>
+      <Link href={"/signup"}>
+        <button className={styles.cardAction}> Create Account</button>
+      </Link>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import Image from "next/image";
 import styles from "./Carousel.module.css";
 
@@ -13,8 +13,6 @@ const imageURLs = [
 ];
 
 const Carousel = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   return (
     <div className="mt-10">
       <div className={styles.mainC}>

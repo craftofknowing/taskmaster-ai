@@ -3,7 +3,7 @@ import AuthForm from "@/components/AuthForm/AuthForm";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function SignupPage() {
+export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +18,7 @@ export default function SignupPage() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/signup`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`,
         {
           method: "POST",
           headers: {
@@ -30,12 +30,11 @@ export default function SignupPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.detail || "Signup failed");
+        throw new Error(errorData.detail || "login failed");
       }
 
       const data = await response.json();
-      console.log("Signup successful:", data);
-
+      console.log("login successful:", data);
       localStorage.setItem("access_token", data.access_token);
       localStorage.setItem(
         "user",
@@ -50,7 +49,7 @@ export default function SignupPage() {
       setError(
         err instanceof Error ? err.message : "An unknown error occurred"
       );
-      console.error("Signup error:", err);
+      console.error("Login error:", err);
     } finally {
       setIsLoading(false);
     }
@@ -58,7 +57,7 @@ export default function SignupPage() {
 
   return (
     <AuthForm
-      title="Getting Started"
+      title="Welcome Back"
       onSubmit={handleSignup}
       error={error}
       isLoading={isLoading}
