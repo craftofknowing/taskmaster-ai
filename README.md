@@ -117,5 +117,5 @@ This command downloads all Git LFS files referenced by your current checkout[8].
 ---
 
 By following these steps, users will be able to access all large files managed by Git LFS in your repository.
-# future Project Goal
+## The Future Goal
 Create a future-of-work task application that blends task autonomy, skill development, and AI insights — making workplaces more human-centric, data-informed, and growth-driven.
