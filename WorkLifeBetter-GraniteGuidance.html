@@ -1,0 +1,2791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future of Work Wireframe Demo</title>
+
+    <style>
+        /* Basic styling for the body and container */
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+        }
+
+        /* Main container for the layout */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Wrapper for the main content sections */
+        .content-wrapper {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Base class for rectangular shapes */
+        .shape {
+            border-style: solid;
+            border-width: 1px;
+            text-align: center;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Align content top by default */
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Base class for text blocks */
+        .text {
+            text-align: center;
+        }
+
+        /* Base class for grouping elements - Less used now */
+        .cluster {
+            border: 1px solid #eaeaea;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-sizing: border-box;
+            padding: 10px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        /* Style for the added ID labels */
+        .element-id-label {
+            display: block;
+            font-size: 10px;
+            color: #555;
+            margin-top: 8px;
+        }
+
+        /* Style for the cluster labels (removed icon placeholder, but keep if needed elsewhere) */
+        /*
+        .cluster-label {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-size: 9px;
+            color: #777;
+            background-color: rgba(230, 230, 230, 0.8);
+            padding: 1px 3px;
+            border-radius: 3px;
+            z-index: 10;
+        }
+        */
+
+        /* --- Section Specific Styles --- */
+
+        /* Top Bar Container */
+        .top-bar-container {
+            display: flex;
+            align-items: center; /* Vertically align items */
+            justify-content: space-between; /* Push items to ends */
+            gap: 15px; /* Space between items if they wrap */
+            width: 100%;
+            margin-bottom: 20px; /* Increased space below top bar */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        /* Header Box (Left side) */
+        #header-box {
+            border-color: #3e1abe;
+            width: auto; /* Allow it to grow */
+            flex-grow: 1; /* Take available space */
+            padding: 15px 20px; /* Adjusted padding */
+            align-items: flex-start; /* Align text left */
+            text-align: left;
+            justify-content: center; /* Vertically center content */
+        }
+        /* Header Title */
+        #header-title {
+            font-size: 22px; /* Increased size */
+            font-weight: bold;
+            color: #3e1abe; /* Match border */
+            margin: 0 0 6px 0; /* Adjusted bottom margin */
+        }
+        /* Header Subtitle */
+        #header-subtitle {
+            font-size: 16px; /* Increased size */
+            color: #555;
+            margin: 0;
+            line-height: 1.4;
+            font-style: italic; /* Add emphasis */
+        }
+
+        /* Container for right-side header elements */
+        .header-right-group {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Space between name, image, icon, button */
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        /* Employee Info */
+        .employee-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #employee-image-placeholder {
+            width: 40px;
+            height: 40px;
+            background-color: #ccc; /* Default color */
+            border-radius: 50%; /* Make it a circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            flex-shrink: 0;
+            cursor: pointer; /* Indicate it's clickable */
+            transition: background-color 0.3s ease;
+        }
+        /* Specific colors for views */
+        #employee-image-placeholder.employee-view { background-color: #3e1abe; } /* Blue for Employee */
+        #employee-image-placeholder.manager-view { background-color: #6c757d; } /* Grey for Manager */
+
+
+        #employee-name { /* Now used for both Employee and Manager Name */
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            white-space: nowrap; /* Prevent name wrapping */
+        }
+
+        /* Icon Placeholder (Removed) */
+        /*
+        #icon-placeholder-cluster { ... }
+        #placeholder-bar-1, #placeholder-bar-2 { ... }
+        */
+
+        /* View Switch Button (Removed) */
+        /*
+        .view-switch-button { ... }
+        */
+
+        /* View Containers */
+        #employee-view {
+            display: flex; /* Shown by default */
+             flex-direction: column;
+             gap: 20px;
+             width: 100%; /* Take full width */
+        }
+        #manager-view {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+
+        /* --- Employee View Specific --- */
+        #employee-view .main-content-area {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            width: 100%;
+            align-items: flex-start;
+        }
+        #employee-view .tasks-and-guidance-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex-grow: 1;
+        }
+        #current-tasks-box {
+            border-color: #3e1abe;
+            min-height: 400px;
+            align-items: stretch;
+            padding: 15px; /* Add padding back */
+            position: relative;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        /* Style for titles inside content boxes */
+         .content-box-title {
+             font-size: 18px;
+             font-weight: bold;
+             color: inherit; /* Inherit color from parent box border */
+             margin: 0 0 15px 0; /* Reset margin */
+             padding-bottom: 8px;
+             border-bottom: 1px solid #eee;
+             width: 100%; /* Take full width */
+             text-align: left;
+             display: flex; /* Added for button alignment */
+             justify-content: space-between; /* Added for button alignment */
+             align-items: center; /* Added for button alignment */
+         }
+         #current-tasks-box .content-box-title { color: #3e1abe; } /* Specific color */
+         #manager-goals-box .content-box-title { color: #6c757d; } /* Specific color */
+         #tasks-awaiting-review-box .content-box-title { color: #ffc107; } /* Yellow for review */
+
+
+        #current-tasks-list {
+            width: 100%; height: 100%; min-height: 300px; /* Adjusted height */
+            overflow-y: auto;
+            padding: 0; /* Remove padding */
+            padding-bottom: 60px; /* Space for button */
+            box-sizing: border-box; display: flex; flex-direction: column;
+            align-items: center; gap: 10px;
+        }
+        .task-item {
+            background-color: #f9f9f9; border: 1px solid #ddd; padding: 10px 15px;
+            border-radius: 6px;
+            width: 100%; /* Changed from 90% */
+            text-align: left; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            display: flex; justify-content: space-between; align-items: center; gap: 10px;
+            box-sizing: border-box; /* Include padding/border in width */
+        }
+        .task-item-content {
+             flex-grow: 1; cursor: pointer; transition: opacity 0.2s ease;
+             display: flex; /* Added for layout of title/difficulty/color/star */
+             align-items: center; /* Vertically align */
+             gap: 8px; /* Space between elements */
+             flex-wrap: wrap; /* Allow wrapping */
+        }
+         .task-item-content:hover { opacity: 0.7; }
+        .task-item-content strong { color: #3e1abe; margin-right: auto; } /* Push title to left */
+        .task-item-complete-button {
+            background-color: #28a745; color: white; border: none; border-radius: 4px;
+            padding: 5px 10px; font-size: 12px; cursor: pointer;
+            flex-shrink: 0; transition: background-color 0.2s ease;
+        }
+        .task-item-complete-button:hover { background-color: #218838; }
+        #right-sidebar {
+            border-color: #3e1abe; width: 240px; flex-shrink: 0;
+            justify-content: flex-start; align-items: stretch;
+            padding: 15px; gap: 25px;
+        }
+        .sidebar-section { display: flex; flex-direction: column; gap: 10px; }
+        .sidebar-section-heading {
+            font-size: 16px; font-weight: bold; color: #3e1abe; margin-bottom: 0;
+            text-align: left; padding-bottom: 5px; border-bottom: 1px solid #eee;
+        }
+        #sidebar-skills-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+        #sidebar-skills-list li {
+            background-color: #f8f8f8; padding: 8px 12px; border-radius: 4px;
+            border: 1px solid #eee; font-size: 14px; color: #333; text-align: left;
+        }
+        #sidebar-skills-list li:nth-child(-n+3) { font-weight: bold; border-left: 4px solid #6d44ff; padding-left: 8px; }
+        #sidebar-recent-tasks-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+        #sidebar-recent-tasks-list li {
+            background-color: #f8f8f8; padding: 8px 12px; border-radius: 4px;
+            border: 1px solid #eee; font-size: 13px; color: #555; text-align: left;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            cursor: pointer; /* Make recent tasks clickable */
+            transition: background-color 0.2s ease;
+        }
+         #sidebar-recent-tasks-list li:hover { background-color: #f0f0f0; } /* Hover effect */
+        #sidebar-recent-tasks-list li strong { color: #333; }
+        .view-more-button {
+            background-color: #e9ecef; color: #495057; border: 1px solid #ced4da;
+            padding: 5px 10px; font-size: 12px; border-radius: 4px; cursor: pointer;
+            text-align: center; margin-top: 5px; transition: background-color 0.2s ease;
+            align-self: center; width: 80%;
+        }
+        .view-more-button:hover { background-color: #dee2e6; }
+        #find-tasks-button {
+            position: absolute; bottom: 15px; right: 15px; z-index: 10;
+            background-color: #3e1abe; border-color: transparent; width: auto;
+            min-width: 180px; height: 45px; cursor: pointer; padding: 5px 20px;
+            border-radius: 6px; color: #ffffff; font-weight: bold; display: flex;
+            align-items: center; justify-content: center; flex-direction: column;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+         #find-tasks-button.shape { background-color: #3e1abe; border-color: transparent; padding: 5px 20px; }
+        .button-text { color: #ffffff; font-weight: bold; }
+        /* Removed element-id-label style for this button */
+        /*
+        #find-tasks-button .element-id-label { color: #eee; font-size: 9px; margin-top: 2px; }
+        */
+        #guidance-button {
+            background-color: #6d44ff; border: none; color: white; padding: 12px 25px;
+            text-align: center; text-decoration: none; display: inline-block;
+            font-size: 16px; border-radius: 8px; cursor: pointer;
+            transition: background-color 0.3s ease; align-self: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            margin-top: 0;
+        }
+        #guidance-button:hover { background-color: #5838cc; }
+
+        /* --- Manager View Specific --- */
+         #manager-view .main-content-area {
+             display: flex;
+             flex-direction: row;
+             gap: 20px;
+             width: 100%;
+             align-items: flex-start;
+         }
+
+         #manager-goals-box {
+             border-color: #6c757d; /* Different border color */
+             flex-basis: 40%; /* Adjust width */
+             flex-grow: 1;
+             min-height: 400px;
+             align-items: stretch;
+             padding: 15px;
+             position: relative;
+             justify-content: flex-start;
+         }
+
+         #manager-goals-list {
+             width: 100%; height: 100%; min-height: 300px; /* Adjusted height */
+             overflow-y: auto;
+             padding: 0; /* Remove padding */
+             box-sizing: border-box;
+             display: flex; flex-direction: column; align-items: stretch; gap: 10px;
+         }
+         .goal-item { /* Style for goal items */
+             background-color: #f9f9f9; border: 1px solid #ddd; padding: 10px 15px;
+             border-radius: 6px; text-align: left; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+             cursor: pointer; /* Make goals clickable */
+             transition: background-color 0.2s ease;
+             width: 100%; /* Fill container */
+             box-sizing: border-box;
+         }
+          .goal-item:hover {
+              background-color: #f0f0f0;
+          }
+         .goal-item strong { color: #495057; } /* Darker text for goals */
+
+         /* Middle Sidebar in Manager View */
+         #manager-sidebar {
+             border-color: #6c757d;
+             flex-basis: 30%; /* Adjust width */
+             flex-shrink: 0;
+             min-height: 400px;
+             justify-content: flex-start;
+             align-items: stretch;
+             padding: 15px;
+             gap: 20px;
+         }
+         #manager-sidebar .sidebar-section-heading { color: #495057; } /* Manager color */
+         #manager-sidebar .placeholder-text { color: #888; font-style: italic; }
+         /* Team/Contributor List in Manager Sidebar */
+         #manager-team-list, #manager-contributors-list {
+             list-style: none;
+             padding: 0;
+             margin: 0;
+             display: flex;
+             flex-direction: column;
+             gap: 8px;
+             max-height: 150px; /* Limit height */
+             overflow-y: auto; /* Add scroll if needed */
+         }
+         #manager-team-list li, #manager-contributors-list li {
+             background-color: #f8f8f8;
+             padding: 8px 12px;
+             border-radius: 4px;
+             border: 1px solid #eee;
+             font-size: 14px;
+             color: #333;
+             text-align: left;
+             cursor: pointer; /* Make names clickable */
+             transition: background-color 0.2s ease;
+         }
+          #manager-team-list li:hover, #manager-contributors-list li:hover {
+              background-color: #f0f0f0;
+         }
+
+         /* New Employee Details Sidebar */
+         #employee-details-sidebar {
+             border-color: #adb5bd; /* Neutral border */
+             flex-basis: 30%; /* Adjust width */
+             flex-shrink: 0;
+             min-height: 400px;
+             justify-content: flex-start;
+             align-items: stretch;
+             padding: 15px;
+             gap: 20px;
+         }
+          #employee-details-sidebar .sidebar-section-heading { color: #495057; }
+          #employee-details-skills-list, #employee-details-tasks-list, #employee-details-recent-tasks-list { /* Added recent tasks */
+              list-style: none; padding: 0; margin: 0;
+              display: flex; flex-direction: column; gap: 8px;
+              max-height: 120px; /* Limit height for lists in details */
+              overflow-y: auto;
+          }
+           #employee-details-skills-list li, #employee-details-tasks-list li, #employee-details-recent-tasks-list li {
+               background-color: #f8f8f8; padding: 8px 12px; border-radius: 4px;
+               border: 1px solid #eee; font-size: 14px; color: #333; text-align: left;
+          }
+          /* Make skills clickable in details sidebar */
+          #employee-details-skills-list li {
+              cursor: pointer;
+              transition: background-color 0.2s ease;
+          }
+           #employee-details-skills-list li:hover {
+               background-color: #f0f0f0;
+           }
+
+         #employee-details-tasks-list li strong { color: #3e1abe; } /* Use task color */
+         #employee-details-recent-tasks-list li strong { color: #333; } /* Use default color */
+
+         /* Tasks Awaiting Review Section */
+         #tasks-awaiting-review-box {
+             border-color: #ffc107; /* Yellow */
+             width: 100%; /* Take full width */
+             margin-top: 20px; /* Space below header */
+             align-items: stretch; /* Stretch list items */
+             padding: 15px;
+         }
+         #tasks-awaiting-review-list {
+             list-style: none;
+             padding: 0;
+             margin: 0;
+             display: flex;
+             flex-direction: column;
+             gap: 10px;
+         }
+         #tasks-awaiting-review-list li {
+             background-color: #fff8e1; /* Light yellow background */
+             border: 1px solid #ffecb3; /* Slightly darker yellow border */
+             padding: 10px 15px;
+             border-radius: 6px;
+             text-align: left;
+             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+             cursor: pointer; /* Indicate clickable */
+             transition: background-color 0.2s ease;
+         }
+         #tasks-awaiting-review-list li:hover {
+             background-color: #fff59d; /* Lighter yellow on hover */
+         }
+         #tasks-awaiting-review-list li strong {
+             color: #f57f17; /* Darker yellow text */
+         }
+
+
+         /* Manager Guidance Button */
+         #manager-guidance-button {
+             background-color: #6d44ff; border: none; color: white; padding: 8px 15px; /* Smaller padding */
+             text-align: center; text-decoration: none; display: inline-block;
+             font-size: 13px; /* Smaller font */
+             border-radius: 8px; cursor: pointer;
+             transition: background-color 0.3s ease; align-self: center;
+             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+             /* Removed margin-left: auto; */ /* No longer need to push right */
+             /* Removed margin-top */
+             width: 100%; /* Make button wide */
+             box-sizing: border-box;
+         }
+         #manager-guidance-button:hover { background-color: #5838cc; }
+
+         /* Reporting Dash Button */
+         #reporting-dash-button {
+             background-color: #17a2b8; /* Teal */
+             color: white;
+             border: none;
+             padding: 8px 15px; /* Match guidance button padding */
+             font-size: 13px; /* Match guidance button font size */
+             font-weight: 500;
+             border-radius: 8px; /* Match guidance button border-radius */
+             cursor: pointer;
+             transition: background-color 0.2s ease;
+             /* Removed margin-bottom: 10px; */
+             align-self: flex-start; /* Align left */
+             width: 100%; /* Make button wide */
+             box-sizing: border-box;
+         }
+         #reporting-dash-button:hover { background-color: #138496; }
+
+         /* Container for Manager Buttons */
+         .manager-buttons-container {
+             display: flex;
+             gap: 15px; /* Space between buttons */
+             width: 100%; /* Take full width */
+             margin-top: 20px; /* Space above buttons */
+             justify-content: center; /* Center buttons */
+             flex-wrap: wrap; /* Allow wrapping on small screens */
+         }
+          .manager-buttons-container button {
+              flex-grow: 1; /* Allow buttons to grow */
+              min-width: 150px; /* Minimum width before wrapping */
+          }
+
+
+        /* --- Modal Styles (Shared Base) --- */
+        .modal-overlay {
+            display: none; position: fixed; z-index: 100; left: 0; top: 0;
+            width: 100%; height: 100%; overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center; align-items: center;
+        }
+        .modal-overlay.show { display: flex; }
+
+        .modal-content {
+            background-color: #fefefe; margin: auto; padding: 0;
+            border: 1px solid #888; width: 80%; max-width: 600px;
+            border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative; max-height: 80vh;
+            display: flex; flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 15px 20px; border-bottom: 1px solid #eee;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-shrink: 0;
+        }
+        .modal-header h2 { margin: 0; color: #3e1abe; }
+
+        .modal-close-button {
+            color: #aaa; font-size: 28px; font-weight: bold;
+            cursor: pointer; line-height: 1; padding: 0 5px;
+        }
+        .modal-close-button:hover,
+        .modal-close-button:focus { color: black; text-decoration: none; }
+
+        .modal-body {
+            padding: 20px; overflow-y: auto; flex-grow: 1;
+            display: flex; flex-direction: column;
+        }
+
+         .modal-footer {
+             padding: 15px 20px;
+             border-top: 1px solid #eee;
+             display: flex;
+             justify-content: flex-end; /* Align buttons to the right */
+             gap: 10px;
+             flex-shrink: 0; /* Prevent footer shrinking */
+         }
+
+        /* --- Find Task Modal Specific Styles --- */
+        #modal-task-list {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .modal-task-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px; border: 1px solid #eee; border-radius: 4px;
+            background-color: #f9f9f9; gap: 10px;
+        }
+        .modal-task-item span { flex-grow: 1; margin-right: 0; }
+        .modal-task-buttons { display: flex; gap: 8px; flex-shrink: 0; }
+        .modal-button {
+            padding: 5px 10px; color: white; border: none;
+            border-radius: 4px; cursor: pointer; font-size: 12px;
+        }
+        .modal-button:disabled { background-color: #ccc; cursor: not-allowed; }
+        .modal-add-task-button { background-color: #28a745; }
+        .modal-add-task-button:hover { background-color: #218838; }
+        .modal-details-button { background-color: #007bff; }
+        .modal-details-button:hover { background-color: #0056b3; }
+
+
+        /* --- Guidance Modal Specific Styles --- */
+        #guidance-modal .modal-content { max-width: 500px; height: 70vh; }
+        #guidance-modal .modal-header h2 { color: #6d44ff; }
+        #guidance-modal .modal-body { padding: 15px; gap: 10px; }
+
+        #guidance-response-area {
+            width: 100%; flex-grow: 1; min-height: 100px; border: 1px solid #ccc;
+            margin-bottom: 0; overflow-y: auto; padding: 10px; justify-content: flex-start;
+            align-items: stretch; text-align: left; background-color: #f9f9f9;
+            border-radius: 6px; display: flex; flex-direction: column; gap: 8px;
+        }
+        #guidance-response-text, #guidance-response-area .element-id-label { display: none; }
+
+        /* Shared Chat Message Styles */
+        .chat-message {
+            padding: 8px 12px; border-radius: 10px; max-width: 80%;
+            word-wrap: break-word; font-size: 14px; line-height: 1.4;
+        }
+        .chat-message.user-message {
+            background-color: #e0e0ff; color: #333; align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+         .chat-message.granite-message {
+             background-color: #e8e8e8; color: #333; align-self: flex-start;
+             border-bottom-left-radius: 2px;
+         }
+         .chat-message strong { display: block; font-size: 11px; color: #555; margin-bottom: 3px; }
+
+        #guidance-input-container {
+            display: flex; gap: 10px; width: 100%; margin-top: 10px; flex-shrink: 0;
+        }
+        #guidance-input {
+            flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 6px;
+            resize: none; font-family: inherit; font-size: 14px;
+            min-height: 40px; height: 40px; box-sizing: border-box;
+        }
+        #guidance-send-button {
+            padding: 0 15px; height: 40px; background-color: #6d44ff; color: white;
+            border: none; border-radius: 6px; cursor: pointer; font-size: 14px;
+            font-weight: bold; transition: background-color 0.3s ease; flex-shrink: 0;
+        }
+         #guidance-send-button:hover { background-color: #5838cc; }
+         #guidance-send-button:disabled { background-color: #ccc; cursor: not-allowed; }
+
+
+        /* --- Task Details Modal Specific Styles --- */
+        #task-details-modal .modal-content { max-width: 550px; }
+        #task-details-modal .modal-header h2 { color: #3e1abe; }
+
+        #task-details-content {
+            display: flex; /* Shown by default */
+            flex-direction: column; gap: 15px; text-align: left;
+        }
+        #task-details-content p { margin: 0; line-height: 1.5; font-size: 14px; }
+        #task-details-content strong { display: inline-block; min-width: 80px; color: #555; }
+        #task-details-description {
+            background-color: #f9f9f9; border: 1px solid #eee; padding: 10px;
+            border-radius: 4px; margin-top: 5px;
+        }
+        #task-details-skills-list {
+            list-style: none; padding: 0; margin: 5px 0 0 0; display: flex;
+            flex-wrap: wrap; gap: 8px;
+        }
+        #task-details-skills-list li {
+            background-color: #e0e0ff; color: #333; padding: 3px 8px;
+            border-radius: 4px; font-size: 12px;
+        }
+        #task-details-granite {
+            background-color: #6d44ff; color: white; padding: 15px;
+            border-radius: 6px; margin-top: 10px; font-size: 14px; line-height: 1.5;
+        }
+        #task-details-granite strong {
+             display: block; font-weight: bold; margin-bottom: 8px;
+             font-size: 15px; color: white; min-width: auto;
+         }
+         #task-details-granite ul {
+             list-style: none; padding: 0; margin: 8px 0 0 0;
+             display: flex; flex-wrap: wrap; gap: 8px;
+         }
+         #task-details-granite ul li {
+             background-color: rgba(255, 255, 255, 0.2);
+             padding: 3px 8px;
+             border-radius: 4px;
+             font-size: 12px;
+         }
+
+        .task-meta-info {
+            display: flex; justify-content: space-between; margin-top: 10px;
+            padding-top: 10px; border-top: 1px solid #eee;
+            font-size: 12px; color: #666;
+        }
+         .task-meta-info strong { min-width: auto; margin-right: 5px; }
+         /* Clickable Goal Span */
+         #task-details-goal-link {
+             cursor: pointer;
+             text-decoration: underline;
+             color: #0056b3; /* Link color */
+         }
+         #task-details-goal-link:hover { color: #003d80; }
+
+        #task-feedback-section {
+            display: none; /* Hidden by default */
+            flex-direction: column; gap: 10px; flex-grow: 1; height: 100%;
+        }
+        #task-feedback-chat-log {
+            width: 100%; flex-grow: 1; min-height: 100px; border: 1px solid #ccc;
+            overflow-y: auto; padding: 10px; justify-content: flex-start;
+            align-items: stretch; text-align: left; background-color: #f9f9f9;
+            border-radius: 6px; display: flex; flex-direction: column; gap: 8px;
+            box-sizing: border-box;
+        }
+        #task-feedback-input-container {
+            display: flex; gap: 10px; width: 100%; flex-shrink: 0;
+        }
+        #task-feedback-input {
+            flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 6px;
+            resize: none; font-family: inherit; font-size: 14px;
+            min-height: 40px; height: 40px; box-sizing: border-box;
+        }
+        #task-feedback-send-button {
+            padding: 0 15px; height: 40px; background-color: #6d44ff; color: white;
+            border: none; border-radius: 6px; cursor: pointer; font-size: 14px;
+            font-weight: bold; transition: background-color 0.3s ease; flex-shrink: 0;
+        }
+         #task-feedback-send-button:hover { background-color: #5838cc; }
+         #task-feedback-send-button:disabled { background-color: #ccc; cursor: not-allowed; }
+
+        /* Buttons in Task Details Footer */
+        #complete-task-button, #add-task-from-details-button { /* Shared styles */
+            display: none; /* Managed by JS */
+            color: white; border: none; padding: 8px 15px; font-size: 14px;
+            font-weight: bold; border-radius: 5px; cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        #complete-task-button { background-color: #28a745; /* Green */ }
+        #complete-task-button:hover { background-color: #218838; }
+        #add-task-from-details-button { background-color: #007bff; /* Blue */ }
+        #add-task-from-details-button:hover { background-color: #0056b3; }
+
+
+        #finalize-task-button {
+            display: none; background-color: #17a2b8; color: white; border: none;
+            padding: 8px 15px; font-size: 14px; font-weight: bold;
+            border-radius: 5px; cursor: pointer; transition: background-color 0.2s ease;
+        }
+        #finalize-task-button:hover { background-color: #138496; }
+        /* Disabled style for Finalize button */
+        #finalize-task-button:disabled {
+             background-color: #ccc;
+             cursor: not-allowed;
+             opacity: 0.7;
+         }
+
+        /* --- All Skills / Recent Tasks Modal --- */
+         #all-skills-modal .modal-content,
+         #all-recent-tasks-modal .modal-content {
+             max-width: 500px; /* Adjust size as needed */
+         }
+         #all-skills-modal .modal-header h2,
+         #all-recent-tasks-modal .modal-header h2 {
+              color: #6d44ff; /* Match sidebar */
+          }
+          #all-skills-list-ul, #all-recent-tasks-list-ul {
+              list-style: none; padding: 0; margin: 0;
+              display: flex; flex-direction: column; gap: 10px;
+          }
+          #all-skills-list-ul li, #all-recent-tasks-list-ul li {
+              background-color: #f8f8f8; padding: 10px 15px; border-radius: 4px;
+              border: 1px solid #eee; font-size: 14px; color: #333; text-align: left;
+          }
+
+        /* --- Goal Details Modal --- */
+         #goal-details-modal .modal-content { max-width: 750px; } /* Made wider */
+         #goal-details-modal .modal-header h2 { color: #495057; }
+         #goal-details-content { display: flex; flex-direction: column; gap: 15px; text-align: left; }
+         #goal-details-content p { margin: 0; line-height: 1.5; font-size: 14px; }
+         #goal-details-content strong { display: inline-block; min-width: 80px; color: #555; }
+         #goal-details-tasks-heading { font-size: 15px; font-weight: bold; margin-top: 10px; margin-bottom: 5px; color: #333; }
+         #goal-details-tasks-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+         #goal-details-tasks-list li {
+             background-color: #f9f9f9; border: 1px solid #eee; padding: 8px 12px; border-radius: 4px; font-size: 13px;
+         }
+          #goal-details-tasks-list li .task-employee {
+              font-style: italic; color: #666; margin-left: 10px;
+          }
+         /* Add Task Button in Goal Details */
+         #add-task-to-goal-button {
+             display: none; /* Hidden by default, shown only in manager view */
+             background-color: #007bff; /* Blue */
+             color: white;
+             border: none;
+             padding: 6px 12px;
+             font-size: 12px;
+             border-radius: 4px;
+             cursor: pointer;
+             margin-top: 15px; /* Space above button */
+             align-self: flex-start; /* Align left */
+         }
+         #add-task-to-goal-button:hover { background-color: #0056b3; }
+         /* Manager Name in Goal Details */
+         #goal-details-manager {
+             display: none; /* Hidden by default */
+         }
+
+        /* --- Add Task To Goal Modal --- */
+         #add-task-to-goal-modal .modal-content { max-width: 500px; max-height: none; } /* Smaller, no max-height */
+         #add-task-to-goal-modal .modal-header h2 { color: #007bff; } /* Match button */
+         #add-task-form { display: flex; flex-direction: column; gap: 15px; text-align: left; }
+         #add-task-form label { font-weight: bold; font-size: 13px; color: #444; }
+         #add-task-form input[type="text"],
+         #add-task-form textarea,
+         #add-task-form select {
+             width: 100%;
+             padding: 8px;
+             border: 1px solid #ccc;
+             border-radius: 4px;
+             font-size: 14px;
+             box-sizing: border-box;
+         }
+          #add-task-form textarea { min-height: 60px; resize: vertical; }
+          #add-task-form button {
+              background-color: #28a745; color: white; border: none; padding: 10px 15px;
+              font-size: 14px; border-radius: 4px; cursor: pointer; align-self: flex-end;
+          }
+           #add-task-form button:hover { background-color: #218838; }
+
+           /* Granite Suggestion Area for Add Task */
+           #add-task-granite-suggestion-area { /* New ID */
+               display: none; /* Hidden initially */
+               margin-top: 15px;
+               padding: 10px;
+               border: 1px dashed #6d44ff;
+               border-radius: 5px;
+               background-color: #f8f8ff;
+               font-size: 13px;
+               text-align: left;
+           }
+           #add-task-granite-suggestion-area strong {
+               display: block;
+               margin-bottom: 8px;
+               color: #6d44ff;
+           }
+            #add-task-granite-suggestion-area p { margin: 5px 0; }
+            #add-task-granite-suggestion-area button {
+                font-size: 11px;
+                padding: 3px 8px;
+                margin-left: 8px;
+                cursor: pointer;
+                background-color: #6d44ff;
+                color: white;
+                border: none;
+                border-radius: 3px;
+            }
+             #add-task-granite-suggestion-area button:hover { background-color: #5838cc; }
+
+
+        /* --- Reporting Modal --- */
+         #reporting-modal .modal-content { max-width: 800px; max-height: 85vh; } /* Wider */
+         #reporting-modal .modal-header h2 { color: #17a2b8; } /* Match button */
+         .reporting-grid {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+             gap: 20px;
+         }
+         .reporting-chart-placeholder {
+             border: 1px solid #ccc;
+             background-color: #f0f0f0;
+             padding: 15px;
+             border-radius: 6px;
+             min-height: 200px;
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             justify-content: center;
+             text-align: center;
+             color: #666;
+             font-size: 14px;
+         }
+          .reporting-chart-placeholder strong {
+              display: block;
+              margin-bottom: 10px;
+              font-size: 15px;
+              color: #444;
+          }
+
+         /* --- Skill Details Modal --- */
+          #skill-details-modal .modal-content { max-width: 500px; }
+          #skill-details-modal .modal-header h2 { color: #6d44ff; } /* Match skill color */
+          #skill-details-content { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+          #skill-details-content p { margin: 0; line-height: 1.5; font-size: 14px; }
+          #skill-details-content strong { color: #555; }
+
+          /* --- Performance Summary Modal (New) --- */
+          #performance-summary-modal .modal-content { max-width: 500px; }
+          #performance-summary-modal .modal-header h2 { color: #28a745; } /* Green for performance */
+          #performance-summary-content { display: flex; flex-direction: column; gap: 15px; text-align: left; }
+          #performance-summary-content p { margin: 0; line-height: 1.5; font-size: 14px; }
+          #performance-summary-content strong { color: #555; }
+          #performance-summary-granite {
+              background-color: #28a745; /* Green */
+              color: white;
+              padding: 15px;
+              border-radius: 6px;
+              margin-top: 10px;
+              font-size: 14px;
+              line-height: 1.5;
+          }
+          #performance-summary-granite strong {
+              display: block;
+              font-weight: bold;
+              margin-bottom: 8px;
+              font-size: 15px;
+              color: white;
+          }
+
+          /* --- Review Task Modal (New) --- */
+          #review-task-modal .modal-content { max-width: 550px; }
+          #review-task-modal .modal-header h2 { color: #ffc107; } /* Match review color */
+          #review-task-content { display: flex; flex-direction: column; gap: 15px; text-align: left; }
+          #review-task-content p { margin: 0; line-height: 1.5; font-size: 14px; }
+          #review-task-content strong { display: inline-block; min-width: 120px; color: #555; }
+          #review-task-feedback-area, #review-task-granite-feedback-area {
+              margin-top: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 4px;
+              background-color: #f9f9f9;
+          }
+           #review-task-feedback-area label, #review-task-granite-feedback-area label {
+               display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; color: #444;
+           }
+           #review-task-feedback-area textarea, #review-task-granite-feedback-area textarea {
+               width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;
+               box-sizing: border-box; font-family: inherit; font-size: 14px; resize: vertical;
+               min-height: 80px;
+           }
+           #review-task-submit-button {
+               background-color: #28a745; color: white; border: none; padding: 10px 15px;
+               font-size: 14px; font-weight: bold; border-radius: 5px; cursor: pointer;
+               transition: background-color 0.2s ease;
+           }
+           #review-task-submit-button:hover { background-color: #218838; }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .top-bar-container { flex-direction: column; align-items: stretch; gap: 10px;}
+            #header-box { text-align: center; align-items: center; margin-right: 0;} /* Center header text */
+            .header-right-group { justify-content: center; flex-wrap: wrap;} /* Allow wrapping */
+
+            .main-content-area { flex-direction: column; }
+            #right-sidebar, #manager-sidebar, #employee-details-sidebar { /* Apply to all sidebars */
+                width: 100%; min-height: auto; height: auto; padding: 15px;
+                flex-direction: column; /* Stack sections vertically again */
+                align-items: stretch; /* Stretch sections */
+                gap: 20px; /* Add gap */
+                flex-basis: auto; /* Reset basis */
+            }
+            #manager-view .main-content-area { flex-direction: column; } /* Stack manager columns too */
+
+            #find-tasks-button { min-width: 150px; right: 10px; bottom: 15px; height: 45px; } /* Adjusted position */
+            #current-tasks-list { padding-bottom: 60px; }
+            .task-item { width: 100%; } /* Full width on mobile */
+
+            .modal-content { width: 90%; }
+            #guidance-button { width: 80%; font-size: 14px; padding: 10px 20px;}
+            #manager-guidance-button { width: 80%; font-size: 14px; padding: 10px 20px;} /* Style manager button */
+            #reporting-dash-button { width: 80%; font-size: 14px; padding: 10px 20px;} /* Style reporting button */
+            .manager-buttons-container { flex-direction: column; gap: 10px; } /* Stack manager buttons */
+            .manager-buttons-container button { min-width: auto; } /* Remove min-width */
+
+            #guidance-modal .modal-content { height: 80vh; }
+            .chat-message { max-width: 90%; }
+            .modal-task-buttons { flex-direction: row; gap: 8px; align-items: center; } /* Buttons back inline */
+            .task-meta-info { flex-direction: row; align-items: center; gap: 15px; } /* Meta info back inline */
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="main-container">
+
+        <div class="content-wrapper">
+
+            <div class="top-bar-container">
+                 <div id="header-box" class="shape">
+                     <h2 id="header-title">Granite Guidance Task Management:</h2>
+                     <p id="header-subtitle">Choose your tasks. Enjoy your work.</p>
+                 </div>
+                 <div class="header-right-group">
+                     <div class="employee-info">
+                         <div id="employee-image-placeholder" class="employee-view">E</div> <span id="employee-name">Employee Name</span>
+                     </div>
+                     </div>
+            </div>
+
+            <div id="employee-view">
+                <div class="main-content-area">
+                    <div class="tasks-and-guidance-container">
+                        <div id="current-tasks-box" class="shape">
+                           <h3 class="content-box-title">Current Tasks</h3>
+                           <div id="current-tasks-list">
+                                <p style="color: #888;">Loading tasks...</p>
+                           </div>
+                           <button id="find-tasks-button" class="button shape">
+                                <span class="button-text">FIND NEW TASKS!</span>
+                                </button>
+                        </div>
+                        <button id="guidance-button">Get Granite Guidance</button>
+                    </div>
+
+                    <div id="right-sidebar" class="shape">
+                        <div class="sidebar-section">
+                            <h3 class="sidebar-section-heading">Top Skills</h3>
+                            <ul id="sidebar-skills-list">
+                                <li>Loading...</li>
+                            </ul>
+                            <button class="view-more-button" id="view-all-skills-button">View All Skills</button>
+                        </div>
+                         <div class="sidebar-section">
+                             <h3 class="sidebar-section-heading">Recent Tasks</h3>
+                             <ul id="sidebar-recent-tasks-list">
+                                 <li>Loading...</li>
+                             </ul>
+                             <button class="view-more-button" id="view-all-recent-tasks-button">View All Recent</button>
+                         </div>
+                    </div>
+                </div>
+            </div> <div id="manager-view">
+                 <div class="main-content-area">
+                     <div class="tasks-and-guidance-container">
+                         <div id="manager-goals-box" class="shape">
+                             <div class="content-box-title">
+                                 <span>Goals</span>
+                                 </div>
+                             <div id="manager-goals-list">
+                                 <p style="color: #888;">Loading goals...</p>
+                             </div>
+                         </div>
+                         <div id="tasks-awaiting-review-box" class="shape">
+                             <h3 class="content-box-title">Tasks Awaiting Review</h3>
+                             <ul id="tasks-awaiting-review-list">
+                                 <li style="text-align: center; color: #888;">Loading tasks...</li>
+                             </ul>
+                         </div>
+                          </div>
+                     <div id="manager-sidebar" class="shape">
+                          <div class="sidebar-section">
+                             <h3 class="sidebar-section-heading">Team Overview</h3>
+                              <ul id="manager-team-list"> <li>Loading team...</li>
+                              </ul>
+                         </div>
+                          <div class="sidebar-section">
+                             <h3 class="sidebar-section-heading">External Contributors</h3>
+                              <ul id="manager-contributors-list"> <li>Loading contributors...</li>
+                              </ul>
+                         </div>
+                     </div>
+                      <div id="employee-details-sidebar" class="shape">
+                             <h3 class="sidebar-section-heading">Employee Details</h3>
+                             <div id="employee-details-content-area">
+                                  <p class="placeholder-text">Click a team member or contributor to view details.</p>
+                                  <div id="employee-details-skills-section" style="display:none; width:100%; text-align:left; margin-top:15px;">
+                                      <strong>Top Skills:</strong>
+                                      <ul id="employee-details-skills-list"></ul>
+                                  </div>
+                                  <div id="employee-details-tasks-section" style="display:none; width:100%; text-align:left; margin-top:15px;">
+                                       <strong>Current Tasks:</strong>
+                                       <ul id="employee-details-tasks-list"></ul>
+                                  </div>
+                                   <div id="employee-details-recent-tasks-section" style="display:none; width:100%; text-align:left; margin-top:15px;">
+                                       <strong>Recent Contributions:</strong>
+                                       <ul id="employee-details-recent-tasks-list"></ul>
+                                   </div>
+                              </div>
+                      </div>
+                 </div>
+                 <div class="manager-buttons-container">
+                     <button id="reporting-dash-button">Reporting Dash</button>
+                     <button id="manager-guidance-button">Get Granite Guidance</button>
+                 </div>
+                 </div>
+
+
+        </div> </div>
+
+    <div id="find-task-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Available Tasks</h2>
+                <span class="modal-close-button find-task-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <ul id="modal-task-list">
+                    <li style="text-align: center; color: #888;">Loading tasks...</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="guidance-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Granite Guidance</h2>
+                <span class="modal-close-button guidance-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="guidance-response-area" class="shape">
+                    <p style="color: #888; font-size: 13px; text-align: center; margin-top: 10px;">Ask Granite a question...</p>
+                </div>
+                <div id="guidance-input-container">
+                    <textarea id="guidance-input" placeholder="Type your message (max 250 chars)..." maxlength="250" rows="1"></textarea>
+                    <button id="guidance-send-button">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="task-details-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="task-details-title">Task Details</h2>
+                <span class="modal-close-button task-details-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="task-details-content">
+                    <p><strong>ID:</strong> <span id="task-details-id">N/A</span></p>
+                    <p><strong>Difficulty:</strong> <span id="task-details-difficulty">N/A</span></p>
+                    <p><strong>Description:</strong></p>
+                    <div id="task-details-description">Loading...</div>
+                    <div>
+                        <strong>Associated Skills:</strong>
+                        <ul id="task-details-skills-list"><li>Loading...</li></ul>
+                    </div>
+                    <div id="task-details-granite">
+                        <strong>Granite Guidance:</strong>
+                        <span id="task-details-granite-text">Loading guidance...</span>
+                         <div id="task-details-suggested-skills-section" style="margin-top: 15px; display: none;">
+                            <strong>Suggested Skills to Learn:</strong>
+                            <ul id="task-details-suggested-skills-list"></ul>
+                         </div>
+                    </div>
+                    <div class="task-meta-info">
+                        <span><strong>Team:</strong> <span id="task-details-team">N/A</span></span>
+                        <span><strong>Company Goal:</strong> <span id="task-details-goal-link" data-goal-id="">N/A</span></span>
+                    </div>
+                </div>
+                <div id="task-feedback-section">
+                     <div id="task-feedback-chat-log">
+                         </div>
+                     <div id="task-feedback-input-container">
+                         <textarea id="task-feedback-input" placeholder="Type your feedback..." rows="1"></textarea>
+                         <button id="task-feedback-send-button">Send Feedback</button>
+                     </div>
+                 </div>
+            </div>
+             <div class="modal-footer">
+                 <button id="add-task-from-details-button">Add Task</button>
+                 <button id="complete-task-button">Complete Task</button>
+                 <button id="finalize-task-button" disabled>Finalize Task</button>
+             </div>
+        </div>
+    </div>
+
+     <div id="all-skills-modal" class="modal-overlay">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h2>All Skills</h2>
+                  <span class="modal-close-button all-skills-close">&times;</span>
+              </div>
+              <div class="modal-body">
+                  <ul id="all-skills-list-ul"> <li style="text-align: center; color: #888;">Loading skills...</li>
+                  </ul>
+              </div>
+          </div>
+     </div>
+
+      <div id="all-recent-tasks-modal" class="modal-overlay">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h2>All Recent Tasks</h2>
+                   <span class="modal-close-button all-recent-tasks-close">&times;</span>
+               </div>
+               <div class="modal-body">
+                    <ul id="all-recent-tasks-list-ul"> <li style="text-align: center; color: #888;">Loading recent tasks...</li>
+                    </ul>
+               </div>
+           </div>
+      </div>
+
+     <div id="goal-details-modal" class="modal-overlay">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h2 id="goal-details-title">Goal Details</h2>
+                 <span class="modal-close-button goal-details-close">&times;</span>
+             </div>
+             <div class="modal-body">
+                 <div id="goal-details-content">
+                     <p><strong>ID:</strong> <span id="goal-details-id">N/A</span></p>
+                     <p><strong>Deadline:</strong> <span id="goal-details-deadline">N/A</span></p>
+                     <p><strong>Status:</strong> <span id="goal-details-status">N/A</span></p>
+                     <p id="goal-details-manager"><strong>Manager:</strong> <span id="goal-details-manager-name">N/A</span></p>
+                     <hr>
+                     <h3 id="goal-details-tasks-heading">Associated Tasks:</h3>
+                     <ul id="goal-details-tasks-list">
+                         <li>Loading tasks...</li>
+                     </ul>
+                      <button id="add-task-to-goal-button">Add New Task to Goal</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+     <div id="add-task-to-goal-modal" class="modal-overlay">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h2>Add New Task</h2>
+                  <span class="modal-close-button add-task-to-goal-close">&times;</span>
+              </div>
+              <div class="modal-body">
+                   <form id="add-task-form">
+                       <input type="hidden" id="add-task-goal-id" name="goalId">
+                       <div>
+                           <label for="add-task-title">Task Title:</label>
+                           <input type="text" id="add-task-title" name="title"> </div>
+                       <div>
+                           <label for="add-task-description">Description:</label>
+                           <textarea id="add-task-description" name="description" required></textarea>
+                       </div>
+                       <div id="add-task-granite-suggestion-area">
+                            <strong>Granite Suggestions:</strong>
+                            <div id="add-task-granite-title-suggestion-container" style="display: none;">
+                                <p>Suggested Title: <span id="add-task-granite-suggested-title"></span> <button type="button" id="add-task-use-title-suggestion">Use</button></p>
+                            </div>
+                             <div id="add-task-granite-desc-suggestion-container" style="display: none;">
+                                 <p>Suggested Description: <span id="add-task-granite-suggested-description"></span> <button type="button" id="add-task-use-desc-suggestion">Use</button></p>
+                             </div>
+                              <div id="add-task-granite-skills-suggestion-container" style="margin-top: 10px; display: none;">
+                                 <p>Suggested Skills: <span id="add-task-granite-suggested-skills"></span></p>
+                             </div>
+                             <div id="add-task-granite-difficulty-suggestion-container" style="margin-top: 5px; display: none;">
+                                 <p>Suggested Difficulty: <span id="add-task-granite-suggested-difficulty"></span></p>
+                             </div>
+                        </div>
+
+                       <div>
+                           <label for="add-task-granite-advice">Granite Advice (Optional):</label>
+                           <textarea id="add-task-granite-advice" name="graniteAdvice"></textarea>
+                       </div>
+                       <button type="submit">Add Task</button>
+                   </form>
+               </div>
+           </div>
+     </div>
+
+     <div id="reporting-modal" class="modal-overlay">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h2>Reporting Dashboard</h2>
+                  <span class="modal-close-button reporting-close">&times;</span>
+              </div>
+              <div class="modal-body">
+                   <p style="text-align:center; margin-bottom: 20px;">Overview of Goals, Tasks, and Contributions.</p>
+                   <div class="reporting-grid">
+                        <div class="reporting-chart-placeholder">
+                            <strong>Goal Progress</strong>
+                            (Infographic/Chart Placeholder)
+                             <p style="font-size:12px; margin-top: 5px;"><i>Predictive Timeline: On track</i></p>
+                        </div>
+                         <div class="reporting-chart-placeholder">
+                             <strong>Task Completion Rate</strong>
+                             (Infographic/Chart Placeholder)
+                             <p style="font-size:12px; margin-top: 5px;"><i>Predictive Timeline: Slight delay expected</i></p>
+                         </div>
+                         <div class="reporting-chart-placeholder">
+                             <strong>Team Contributions</strong>
+                             (Pie Chart Placeholder)
+                             <p style="font-size:12px; margin-top: 5px;"><i>Predictive Timeline: Stable</i></p>
+                         </div>
+                         <div class="reporting-chart-placeholder">
+                             <strong>External Contributions</strong>
+                             (Chart Placeholder)
+                             <p style="font-size:12px; margin-top: 5px;"><i>Predictive Timeline: Increasing</i></p>
+                         </div>
+                    </div>
+              </div>
+          </div>
+     </div>
+
+      <div id="skill-details-modal" class="modal-overlay">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h2 id="skill-details-name">Skill Details</h2>
+                   <span class="modal-close-button skill-details-close">&times;</span>
+               </div>
+               <div class="modal-body">
+                    <div id="skill-details-content">
+                         <p><strong>Justification / Evidence:</strong></p>
+                         <p id="skill-details-justification">Loading details...</p>
+                         </div>
+               </div>
+           </div>
+      </div>
+
+      <div id="performance-summary-modal" class="modal-overlay">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h2>Performance Summary</h2>
+                   <span class="modal-close-button performance-summary-close">&times;</span>
+               </div>
+               <div class="modal-body">
+                    <div id="performance-summary-content">
+                         <p><strong>Task:</strong> <span id="summary-task-title">N/A</span></p>
+                         <p><strong>Completed On:</strong> <span id="summary-completed-date">N/A</span></p>
+                         <div id="performance-summary-granite">
+                              <strong>Granite Performance Insight:</strong>
+                              <span id="summary-granite-text">Loading summary...</span>
+                         </div>
+                    </div>
+               </div>
+           </div>
+      </div>
+
+      <div id="review-task-modal" class="modal-overlay">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h2>Review Task: <span id="review-task-title">N/A</span></h2>
+                   <span class="modal-close-button review-task-close">&times;</span>
+               </div>
+               <div class="modal-body">
+                    <div id="review-task-content">
+                         <p><strong>Task ID:</strong> <span id="review-task-id">N/A</span></p>
+                         <p><strong>Completed By:</strong> <span id="review-task-employee">N/A</span></p>
+                         <p><strong>Completed On:</strong> <span id="review-task-completed-date">N/A</span></p>
+
+                         <div id="review-task-feedback-area">
+                             <label for="manager-feedback">Your Performance Feedback:</label>
+                             <textarea id="manager-feedback" placeholder="Provide feedback on the employee's performance for this task..."></textarea>
+                         </div>
+
+                         <div id="review-task-granite-feedback-area">
+                             <label for="granite-feedback">Feedback to Granite (Optional):</label>
+                             <textarea id="granite-feedback" placeholder="Provide additional context or feedback for AI analysis..."></textarea>
+                         </div>
+                    </div>
+               </div>
+               <div class="modal-footer">
+                   <button id="review-task-submit-button">Submit Review and Mark Reviewed</button>
+               </div>
+           </div>
+      </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Get DOM Elements ---
+            const findTasksButton = document.getElementById('find-tasks-button');
+            const findTaskModal = document.getElementById('find-task-modal');
+            const modalTaskList = document.getElementById('modal-task-list');
+            const currentTasksListContainer = document.getElementById('current-tasks-list');
+            const guidanceButton = document.getElementById('guidance-button'); // Employee guidance button
+            const guidanceModal = document.getElementById('guidance-modal');
+            const guidanceResponseArea = document.getElementById('guidance-response-area');
+            const guidanceInput = document.getElementById('guidance-input');
+            const guidanceSendButton = document.getElementById('guidance-send-button');
+
+            // Sidebar Elements
+            const sidebarSkillsList = document.getElementById('sidebar-skills-list');
+            const sidebarRecentTasksList = document.getElementById('sidebar-recent-tasks-list');
+            const viewAllSkillsButton = document.getElementById('view-all-skills-button');
+            const viewAllRecentTasksButton = document.getElementById('view-all-recent-tasks-button');
+
+            // Task Details Modal Elements
+            const taskDetailsModal = document.getElementById('task-details-modal');
+            const taskDetailsContent = document.getElementById('task-details-content');
+            const taskFeedbackSection = document.getElementById('task-feedback-section');
+            const taskDetailsTitle = document.getElementById('task-details-title');
+            const taskDetailsId = document.getElementById('task-details-id');
+            const taskDetailsDifficulty = document.getElementById('task-details-difficulty');
+            const taskDetailsDescription = document.getElementById('task-details-description');
+            const taskDetailsSkillsList = document.getElementById('task-details-skills-list');
+            const taskDetailsGraniteText = document.getElementById('task-details-granite-text');
+            const taskDetailsSuggestedSkillsSection = document.getElementById('task-details-suggested-skills-section'); // New
+            const taskDetailsSuggestedSkillsList = document.getElementById('task-details-suggested-skills-list'); // New
+            const taskDetailsTeam = document.getElementById('task-details-team');
+            const taskDetailsGoalSpan = document.getElementById('task-details-goal-link');
+            const completeTaskButton = document.getElementById('complete-task-button');
+            const finalizeTaskButton = document.getElementById('finalize-task-button');
+            const addTaskFromDetailsButton = document.getElementById('add-task-from-details-button');
+            const taskFeedbackChatLog = document.getElementById('task-feedback-chat-log');
+            const taskFeedbackInput = document.getElementById('task-feedback-input');
+            const taskFeedbackSendButton = document.getElementById('task-feedback-send-button');
+
+            // Sidebar Modals
+            const allSkillsModal = document.getElementById('all-skills-modal');
+            const allSkillsListUl = document.getElementById('all-skills-list-ul');
+            const allRecentTasksModal = document.getElementById('all-recent-tasks-modal');
+            const allRecentTasksListUl = document.getElementById('all-recent-tasks-list-ul');
+
+            // View Switching Elements
+            const employeeViewContainer = document.getElementById('employee-view');
+            const managerViewContainer = document.getElementById('manager-view');
+            // Removed switch buttons
+            // const switchToManagerButton = document.getElementById('switch-view-button');
+            // const switchToEmployeeButton = document.getElementById('switch-to-employee-button');
+            const employeeNameSpan = document.getElementById('employee-name');
+            const employeeImagePlaceholder = document.getElementById('employee-image-placeholder'); // Get the circle element
+
+            // Manager View Elements
+            const managerGoalsListContainer = document.getElementById('manager-goals-list');
+            const managerTeamListContainer = document.getElementById('manager-team-list');
+            const managerContributorsListContainer = document.getElementById('manager-contributors-list');
+            const managerGuidanceButton = document.getElementById('manager-guidance-button');
+            const employeeDetailsSidebar = document.getElementById('employee-details-sidebar');
+            const employeeDetailsContentArea = document.getElementById('employee-details-content-area');
+            const employeeDetailsSkillsSection = document.getElementById('employee-details-skills-section');
+            const employeeDetailsTasksSection = document.getElementById('employee-details-tasks-section');
+            const employeeDetailsSkillsList = document.getElementById('employee-details-skills-list');
+            const employeeDetailsTasksList = document.getElementById('employee-details-tasks-list');
+            const employeeDetailsRecentTasksList = document.getElementById('employee-details-recent-tasks-list');
+            const employeeDetailsRecentTasksSection = document.getElementById('employee-details-recent-tasks-section');
+            const reportingDashButton = document.getElementById('reporting-dash-button');
+            const managerButtonsContainer = document.querySelector('.manager-buttons-container'); // Get the new button container
+            const tasksAwaitingReviewBox = document.getElementById('tasks-awaiting-review-box'); // New
+            const tasksAwaitingReviewList = document.getElementById('tasks-awaiting-review-list'); // New
+
+
+            // Goal Details Modal Elements
+            const goalDetailsModal = document.getElementById('goal-details-modal');
+            const goalDetailsTitle = document.getElementById('goal-details-title');
+            const goalDetailsId = document.getElementById('goal-details-id');
+            const goalDetailsDeadline = document.getElementById('goal-details-deadline');
+            const goalDetailsStatus = document.getElementById('goal-details-status');
+            const goalDetailsTasksList = document.getElementById('goal-details-tasks-list');
+            const addTaskToGoalButton = document.getElementById('add-task-to-goal-button');
+            const goalDetailsManagerP = document.getElementById('goal-details-manager');
+            const goalDetailsManagerNameSpan = document.getElementById('goal-details-manager-name');
+
+
+            // Add Task To Goal Modal Elements
+            const addTaskToGoalModal = document.getElementById('add-task-to-goal-modal');
+            const addTaskForm = document.getElementById('add-task-form');
+            const addTaskGoalIdInput = document.getElementById('add-task-goal-id');
+            const addTaskTitleInput = document.getElementById('add-task-title');
+            const addTaskDescriptionInput = document.getElementById('add-task-description');
+            // Removed addTaskSkillsInput
+            // const addTaskSkillsInput = document.getElementById('add-task-skills');
+            // Changed ID of granite suggestion area
+            const addTaskGraniteSuggestionArea = document.getElementById('add-task-granite-suggestion-area');
+            const addTaskGraniteTitleSuggestionContainer = document.getElementById('add-task-granite-title-suggestion-container');
+            const addTaskGraniteDescSuggestionContainer = document.getElementById('add-task-granite-desc-suggestion-container');
+            const addTaskGraniteSuggestedTitleSpan = document.getElementById('add-task-granite-suggested-title');
+            const addTaskGraniteSuggestedDescSpan = document.getElementById('add-task-granite-suggested-description');
+            const addTaskUseTitleSuggestionButton = document.getElementById('add-task-use-title-suggestion');
+            const addTaskUseDescSuggestionButton = document.getElementById('add-task-use-desc-suggestion');
+            // New elements for suggested skills and difficulty
+            const addTaskGraniteSkillsSuggestionContainer = document.getElementById('add-task-granite-skills-suggestion-container');
+            const addTaskGraniteSuggestedSkillsSpan = document.getElementById('add-task-granite-suggested-skills');
+            const addTaskGraniteDifficultySuggestionContainer = document.getElementById('add-task-granite-difficulty-suggestion-container');
+            const addTaskGraniteSuggestedDifficultySpan = document.getElementById('add-task-granite-suggested-difficulty');
+
+
+            // Reporting Modal Element
+            const reportingModal = document.getElementById('reporting-modal');
+
+            // Skill Details Modal Elements (New)
+            const skillDetailsModal = document.getElementById('skill-details-modal');
+            const skillDetailsName = document.getElementById('skill-details-name');
+            const skillDetailsJustification = document.getElementById('skill-details-justification');
+
+            // Performance Summary Modal Elements (New)
+            const performanceSummaryModal = document.getElementById('performance-summary-modal');
+            const summaryTaskTitleSpan = document.getElementById('summary-task-title');
+            const summaryCompletedDateSpan = document.getElementById('summary-completed-date');
+            const summaryGraniteTextSpan = document.getElementById('summary-granite-text');
+
+            // Review Task Modal Elements (New)
+            const reviewTaskModal = document.getElementById('review-task-modal');
+            const reviewTaskTitleSpan = document.getElementById('review-task-title');
+            const reviewTaskIdSpan = document.getElementById('review-task-id');
+            const reviewTaskEmployeeSpan = document.getElementById('review-task-employee');
+            const reviewTaskCompletedDateSpan = document.getElementById('review-task-completed-date');
+            const managerFeedbackTextarea = document.getElementById('manager-feedback');
+            const graniteFeedbackTextarea = document.getElementById('granite-feedback');
+            const reviewTaskSubmitButton = document.getElementById('review-task-submit-button');
+
+
+            // --- State Variables ---
+            let currentDetailTaskId = null;
+            let currentGoalId = null; // Track open goal
+            let taskFeedbackMessages = [];
+            let hasUserProvidedFeedback = false;
+            let isManagerView = false; // Track current view
+            const managerTeam = 'Project Alpha'; // Simulate manager's team
+            const managerId = 'mgr001'; // Simulate manager's ID
+            const currentEmployeeId = 'emp001'; // Simulate the currently logged-in employee
+            let currentReviewTaskId = null; // Track the task being reviewed
+
+
+            // --- Sample Data (Enhanced) ---
+             const employees = [ // Sample employee data
+                 { id: 'emp001', name: 'Alice Smith', teamId: 'Project Alpha', managerId: 'mgr001', skills: ['JavaScript (Advanced)', 'React Development', 'Problem Solving', 'CSS'] },
+                 { id: 'emp002', name: 'Bob Johnson', teamId: 'Core Platform', managerId: 'mgr002', skills: ['Technical Writing', 'Confluence', 'API Design', 'Python'] },
+                 { id: 'emp003', name: 'Charlie Brown', teamId: 'Project Alpha', managerId: 'mgr001', skills: ['Testing', 'JavaScript', 'Quality Assurance', 'SQL'] },
+                 { id: 'emp004', name: 'Diana Prince', teamId: 'Frontend', managerId: 'mgr003', skills: ['UI Design', 'Figma', 'User Experience', 'HTML'] }, // External
+             ];
+             let assignedTasks = [
+                 { id: 'task001', title: 'Review Project Proposal', difficulty: 'Medium', description: 'Carefully read the attached project proposal document...', skills: ['Critical Thinking', 'Budget Analysis'], team: 'Project Alpha', goal: 'goal03', graniteAdvice: 'This task matches your analytical skills well...', assignedEmployeeId: 'emp001', isMandatory: true, progress: '75%' }, // Added isMandatory and progress
+                 { id: 'task002', title: 'Update API Documentation', difficulty: 'Easy', description: 'Update the API documentation on Confluence...', skills: ['Technical Writing', 'Confluence'], team: 'Core Platform', goal: 'goal02', graniteAdvice: 'Straightforward task...', assignedEmployeeId: 'emp002', isMandatory: false, progress: 'In Progress' }, // Assigned to external Bob
+                 { id: 'task103', title: 'Write Unit Tests', difficulty: 'Medium', description: 'Increase unit test coverage...', skills: ['Testing', 'JavaScript'], team: 'Core Platform', goal: 'goal02', graniteAdvice: 'Good opportunity...', assignedEmployeeId: 'emp003', isMandatory: false, progress: '50%' }, // Assigned to Charlie
+             ];
+             let availableTasks = [
+                 { id: 'task101', title: 'Design User Interface Mockups', difficulty: 'Hard', description: 'Create high-fidelity mockups...', skills: ['UI Design', 'Figma', 'User Experience'], team: 'Frontend', goal: 'goal01', graniteAdvice: 'Challenging task...', isMandatory: false, isTopChoice: true }, // Added isTopChoice
+                 { id: 'task102', title: 'Develop API Endpoint', difficulty: 'Hard', description: 'Implement the new `/users/{id}/settings` API endpoint...', skills: ['Backend Development', 'REST API', 'Node.js', 'Testing'], team: 'Core Platform', goal: 'goal01', graniteAdvice: 'Requires strong backend skills...', isMandatory: false },
+                 { id: 'task104', title: 'Prepare Presentation Slides', difficulty: 'Easy', description: 'Create 5-7 slides...', skills: ['Communication', 'Presentation Software'], team: 'Project Alpha', goal: 'goal03', graniteAdvice: 'Focus on clear visuals...', isMandatory: false, isTopChoice: true }, // Added isTopChoice
+                 { id: 'task105', title: 'Client Meeting Follow-up', difficulty: 'Medium', description: 'Draft and send a follow-up email...', skills: ['Communication', 'Client Relations'], team: 'Client Success', goal: 'Maintain Client Satisfaction', graniteAdvice: 'Ensure all action items...', isMandatory: false },
+                 { id: 'task106', title: 'Research New AI Models', difficulty: 'Hard', description: 'Investigate potential AI models for task recommendation improvement.', skills: ['AI/ML', 'Research', 'Data Analysis'], team: 'R&D', goal: 'Enhance AI Capabilities', graniteAdvice: 'Explore recent advancements in NLP and recommendation systems.', isMandatory: false, isTopChoice: true }, // Added a new task for variety
+             ];
+             // Added sample justification and performance summaries
+             const employeeSkills = [
+                 { id: 'skill01', name: 'JavaScript (Advanced)', justification: 'Completed multiple complex JS tasks (task103, task901). Positive feedback on code quality.' },
+                 { id: 'skill02', name: 'React Development', justification: 'Led frontend development on Project Phoenix using React.' },
+                 { id: 'skill03', name: 'Problem Solving', justification: 'Consistently identifies and resolves complex bugs (e.g., task901).' },
+                 { id: 'skill04', name: 'API Design', justification: 'Contributed to API design discussions for Core Platform.' },
+                 { id: 'skill05', name: 'Communication', justification: 'Excellent communication skills demonstrated in client follow-ups (task105).' },
+                 { id: 'skill06', name: 'Project Management', justification: 'Effectively managed sub-tasks during Project Proposal review (task001).' }
+             ];
+             let recentlyCompletedTasks = [ // Added assignedEmployeeId and performanceSummary
+                 { id: 'task901', title: 'Fix Login Bug', completedDate: new Date(Date.now() - 86400000 * 1), assignedEmployeeId: 'emp001', team: 'Project Alpha', performanceSummary: "Granite analysis: Task completed efficiently and accurately. Demonstrates strong debugging skills. Feedback indicated the fix was well-received by users.", requiresReview: true }, // Added requiresReview
+                 { id: 'task902', title: 'Deploy Hotfix', completedDate: new Date(Date.now() - 86400000 * 2), assignedEmployeeId: 'emp003', team: 'Project Alpha', performanceSummary: "Granite analysis: Deployment was successful and within the expected timeframe. No issues reported post-deployment. Shows reliability in deployment processes.", requiresReview: true }, // Added requiresReview
+                  { id: 'task903', title: 'Onboard New Hire', completedDate: new Date(Date.now() - 86400000 * 3), assignedEmployeeId: 'emp001', team: 'Project Alpha', performanceSummary: "Granite analysis: Provided clear and helpful guidance to the new hire. Feedback noted a welcoming and informative onboarding experience. Highlights strong mentoring capabilities.", requiresReview: false }, // Doesn't require review
+                  { id: 'task904', title: 'Code Review', completedDate: new Date(Date.now() - 86400000 * 4), assignedEmployeeId: 'emp002', team: 'Core Platform', performanceSummary: "Granite analysis: Provided insightful feedback on code quality and potential improvements. Review was thorough and constructive. Demonstrates strong code analysis skills.", requiresReview: false }, // Bob (External), Doesn't require review
+             ];
+             // Sample Manager Data
+             let managerGoals = [ // Made let so we can modify associatedTaskIds
+                 { id: 'goal01', title: 'Increase Team Velocity by 15%', deadline: 'End of Q3', status: 'On Track', associatedTaskIds: ['task101', 'task102'], managerName: 'Manager Mike' },
+                 { id: 'goal02', title: 'Reduce Production Bugs by 20%', deadline: 'End of Q4', status: 'Needs Attention', associatedTaskIds: ['task103', 'task002'], managerName: 'Manager Mike' }, // Added task002
+                 { id: 'goal03', title: 'Complete Project Phoenix Launch', deadline: 'August 31st', status: 'On Track', associatedTaskIds: ['task001', 'task104'], managerName: 'Manager Sarah' },
+             ];
+
+
+            // --- Functions ---
+
+            // == View Switching Functions ==
+            function showEmployeeView() {
+                isManagerView = false; // Update view state
+                if (employeeViewContainer) employeeViewContainer.style.display = 'flex';
+                if (managerViewContainer) managerViewContainer.style.display = 'none';
+                if (employeeNameSpan) employeeNameSpan.textContent = "Alice Smith"; // Set specific employee name
+                if (employeeImagePlaceholder) {
+                    employeeImagePlaceholder.classList.remove('manager-view');
+                    employeeImagePlaceholder.classList.add('employee-view');
+                    employeeImagePlaceholder.textContent = 'E'; // Set text to E
+                }
+            }
+            function showManagerView() {
+                isManagerView = true; // Update view state
+                if (employeeViewContainer) employeeViewContainer.style.display = 'none';
+                if (managerViewContainer) managerViewContainer.style.display = 'flex';
+                if (employeeNameSpan) employeeNameSpan.textContent = "Manager Mike"; // Set specific manager name
+                 if (employeeImagePlaceholder) {
+                    employeeImagePlaceholder.classList.remove('employee-view');
+                    employeeImagePlaceholder.classList.add('manager-view');
+                    employeeImagePlaceholder.textContent = 'M'; // Set text to M
+                }
+                renderManagerGoals(); // Populate manager goals
+                renderManagerTeamOverview(); // Populate team list
+                renderExternalContributors(); // Populate contributors
+                clearEmployeeDetailsSidebar(); // Clear details on view switch
+                renderTasksAwaitingReview(); // Populate tasks awaiting review
+            }
+
+
+            // == Employee Task Board Functions ==
+            function renderEmployeeTaskBoard() {
+                if (!currentTasksListContainer) return;
+
+                currentTasksListContainer.innerHTML = ''; // Clear previous content
+
+                // Separate tasks into categories
+                const mandatoryTasks = availableTasks.filter(task => task.isMandatory && !assignedTasks.some(at => at.id === task.id));
+                const assignedEmployeeTasks = assignedTasks.filter(task => task.assignedEmployeeId === currentEmployeeId); // Tasks assigned to current employee
+                const topChoiceTasks = availableTasks.filter(task => task.isTopChoice && !mandatoryTasks.some(mt => mt.id === task.id) && !assignedEmployeeTasks.some(at => at.id === task.id)); // Top choices not already mandatory or assigned
+                const otherAvailableTasks = availableTasks.filter(task => !task.isMandatory && !task.isTopChoice && !assignedEmployeeTasks.some(at => at.id === task.id)); // Other tasks
+
+
+                // Render Mandatory Tasks
+                if (mandatoryTasks.length > 0) {
+                     const heading = document.createElement('h4'); heading.textContent = 'Mandatory Tasks';
+                     heading.style.cssText = 'width: 100%; text-align: left; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; color: #6f42c1;'; // Purple color
+                     currentTasksListContainer.appendChild(heading);
+                     mandatoryTasks.forEach(task => currentTasksListContainer.appendChild(createTaskBoardItem(task, true))); // Pass isMandatory flag
+                }
+
+                 // Render Assigned Tasks (Employee's current tasks)
+                 if (assignedEmployeeTasks.length > 0) {
+                     const heading = document.createElement('h4'); heading.textContent = 'Your Current Tasks';
+                     heading.style.cssText = 'width: 100%; text-align: left; margin-top: 20px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; color: #3e1abe;'; // Blue color
+                     currentTasksListContainer.appendChild(heading);
+                     assignedEmployeeTasks.forEach(task => currentTasksListContainer.appendChild(createTaskBoardItem(task, false, true))); // Pass isAssigned flag
+                 }
+
+
+                // Render Top Choice Tasks
+                if (topChoiceTasks.length > 0) {
+                    const heading = document.createElement('h4'); heading.innerHTML = 'Top Choices for You <span style="color: gold;">★</span>';
+                    heading.style.cssText = 'width: 100%; text-align: left; margin-top: 20px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; color: #333;';
+                    currentTasksListContainer.appendChild(heading);
+                    topChoiceTasks.forEach(task => currentTasksListContainer.appendChild(createTaskBoardItem(task)));
+                }
+
+                // Render All Other Available Tasks
+                if (otherAvailableTasks.length > 0) {
+                    const heading = document.createElement('h4'); heading.textContent = 'Other Available Tasks';
+                     heading.style.cssText = 'width: 100%; text-align: left; margin-top: 20px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; color: #333;';
+                    currentTasksListContainer.appendChild(heading);
+                    otherAvailableTasks.forEach(task => currentTasksListContainer.appendChild(createTaskBoardItem(task)));
+                }
+
+
+                if (mandatoryTasks.length === 0 && assignedEmployeeTasks.length === 0 && topChoiceTasks.length === 0 && otherAvailableTasks.length === 0) {
+                    const p = document.createElement('p'); p.textContent = 'No tasks available at this time.';
+                    p.style.color = '#888'; currentTasksListContainer.appendChild(p);
+                }
+            }
+
+            // Helper function to create a task item for the board
+            function createTaskBoardItem(task, isMandatory = false, isAssigned = false) {
+                 const div = document.createElement('div');
+                 div.classList.add('task-item');
+                 div.dataset.taskId = task.id;
+
+                 const contentDiv = document.createElement('div');
+                 contentDiv.classList.add('task-item-content');
+
+                 let colorClass = '';
+                 if (isMandatory) {
+                     colorClass = 'color-purple';
+                 } else {
+                     switch (task.difficulty) {
+                         case 'Easy': colorClass = 'color-green'; break;
+                         case 'Medium': colorClass = 'color-yellow'; break;
+                         case 'Hard': colorClass = 'color-red'; break;
+                         default: colorClass = '';
+                     }
+                 }
+
+                 let taskTitleHtml = `<span class="color-indicator ${colorClass}"></span> <strong>${task.title}</strong>`;
+                 if (task.isTopChoice && !isMandatory) { // Add star only if it's a top choice and not mandatory
+                     taskTitleHtml += ' <span class="star-indicator">★</span>';
+                 }
+
+                 contentDiv.innerHTML = taskTitleHtml;
+
+                 // Add difficulty text
+                 if (!isMandatory) { // Don't show difficulty text for mandatory tasks
+                     const difficultySpan = document.createElement('span');
+                     difficultySpan.textContent = `(${task.difficulty})`;
+                     difficultySpan.style.fontSize = '0.9em';
+                     difficultySpan.style.color = '#555';
+                     contentDiv.appendChild(difficultySpan);
+                 }
+
+
+                 // Add progress indicator if assigned
+                 if (isAssigned) {
+                     const progressSpan = document.createElement('span');
+                     progressSpan.textContent = `Progress: ${task.progress || 'Not Started'}`;
+                     progressSpan.style.fontSize = '0.9em';
+                     progressSpan.style.color = '#007bff';
+                     progressSpan.style.marginLeft = '10px'; // Add some space
+                     contentDiv.appendChild(progressSpan);
+                 }
+
+
+                 const actionButtons = document.createElement('div');
+                 actionButtons.classList.add('task-actions');
+
+                 const detailsButton = document.createElement('button');
+                 detailsButton.textContent = 'Details';
+                 detailsButton.classList.add('modal-button', 'modal-details-button'); // Reuse modal button styles
+                 detailsButton.dataset.taskId = task.id; // Add task ID for click handling
+
+                 actionButtons.appendChild(detailsButton);
+
+                 div.appendChild(contentDiv);
+                 div.appendChild(actionButtons);
+
+                 return div;
+            }
+
+
+            // == Find Task Modal Functions ==
+            function populateModalTasks() {
+                modalTaskList.innerHTML = '';
+                if (availableTasks.length === 0) {
+                     const li = document.createElement('li'); li.textContent = 'No new tasks available.';
+                     li.style.cssText = 'color: #888; text-align: center;'; modalTaskList.appendChild(li); return;
+                }
+                availableTasks.forEach(task => {
+                    const li = document.createElement('li'); li.classList.add('modal-task-item');
+                    li.dataset.taskId = task.id;
+                    const span = document.createElement('span');
+                    span.innerHTML = `<strong>${task.title}</strong> (Difficulty: ${task.difficulty})`;
+                    const buttonContainer = document.createElement('div'); buttonContainer.classList.add('modal-task-buttons');
+                    const detailsButton = document.createElement('button'); detailsButton.textContent = 'Details';
+                    detailsButton.classList.add('modal-button', 'modal-details-button');
+                    const addButton = document.createElement('button'); addButton.textContent = 'Add';
+                    addButton.classList.add('modal-button', 'modal-add-task-button');
+                    addButton.disabled = assignedTasks.some(assigned => assigned.id === task.id);
+                    buttonContainer.appendChild(detailsButton); buttonContainer.appendChild(addButton);
+                    li.appendChild(span); li.appendChild(buttonContainer); modalTaskList.appendChild(li);
+                });
+            }
+
+            function openFindTaskModal() { populateModalTasks(); findTaskModal.classList.add('show'); }
+            function closeFindTaskModal() { findTaskModal.classList.remove('show'); }
+
+            function addTaskToCurrentList(taskId) {
+                const taskToAddIndex = availableTasks.findIndex(task => task.id === taskId); // Find index
+                if (taskToAddIndex > -1 && !assignedTasks.some(task => task.id === taskId)) {
+                    const taskToAdd = availableTasks[taskToAddIndex]; // Get task
+                    taskToAdd.assignedEmployeeId = currentEmployeeId; // Assign to current employee
+                    taskToAdd.progress = 'Not Started'; // Initialize progress
+                    assignedTasks.push(taskToAdd);
+                    // Optionally remove from available tasks if desired
+                    // availableTasks.splice(taskToAddIndex, 1);
+
+                    renderEmployeeTaskBoard(); // Re-render the employee task board
+                    // Disable button in Find Tasks modal
+                    const modalButton = modalTaskList.querySelector(`.modal-task-item[data-task-id="${taskId}"] .modal-add-task-button`);
+                    if (modalButton) modalButton.disabled = true;
+                    // Disable button in Details modal if it happens to be open
+                    if (addTaskFromDetailsButton && currentDetailTaskId === taskId) {
+                         addTaskFromDetailsButton.style.display = 'none';
+                    }
+                } else { console.warn(`Task with ID ${taskId} not found or already assigned.`); }
+            }
+
+            // == Guidance Modal Functions ==
+            function openGuidanceModal() { guidanceModal.classList.add('show'); guidanceInput.focus(); }
+            function closeGuidanceModal() { guidanceModal.classList.remove('show'); }
+
+            function appendGuidanceMessage(text, sender) {
+                const placeholder = guidanceResponseArea.querySelector('p');
+                if (placeholder?.textContent.includes('Ask Granite')) placeholder.remove();
+                const messageDiv = document.createElement('div'); messageDiv.classList.add('chat-message');
+                const sanitizedText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                if (sender === 'user') {
+                    messageDiv.classList.add('user-message'); messageDiv.innerHTML = sanitizedText;
+                } else {
+                    messageDiv.classList.add('granite-message'); messageDiv.innerHTML = `<strong>Granite:</strong> ${sanitizedText}`;
+                }
+                guidanceResponseArea.appendChild(messageDiv);
+                guidanceResponseArea.scrollTop = guidanceResponseArea.scrollHeight;
+            }
+
+            function handleGuidanceSend() {
+                const messageText = guidanceInput.value.trim();
+                if (messageText === '') return;
+                appendGuidanceMessage(messageText, 'user');
+                guidanceInput.value = ''; guidanceInput.style.height = '40px';
+                guidanceSendButton.disabled = true;
+                setTimeout(() => {
+                    const graniteResponse = `I received your message: "${messageText}". I'm still learning how to respond properly.`;
+                    appendGuidanceMessage(graniteResponse, 'granite');
+                    guidanceSendButton.disabled = false;
+                }, 1000);
+            }
+
+            function adjustTextareaHeight(textarea) {
+                if (!textarea) return;
+                textarea.style.height = 'auto';
+                textarea.style.height = (textarea.scrollHeight) + 'px';
+            }
+
+            // == Sidebar Functions ==
+            function renderSidebarSkills() {
+                if (!sidebarSkillsList) return;
+                sidebarSkillsList.innerHTML = ''; // Clear previous
+                // Display only top 3 skills directly
+                const topSkills = employeeSkills.slice(0, 3);
+                if (topSkills.length === 0) {
+                    const li = document.createElement('li'); li.textContent = 'No skills listed.';
+                    li.style.cssText = 'color: #888; background: transparent; border: none;';
+                    sidebarSkillsList.appendChild(li); return;
+                }
+                topSkills.forEach(skill => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = skill.name;
+                    listItem.dataset.skillId = skill.id;
+                    sidebarSkillsList.appendChild(listItem);
+                });
+            }
+
+            function renderSidebarRecentTasks() {
+                 if (!sidebarRecentTasksList) return;
+                 sidebarRecentTasksList.innerHTML = ''; // Clear previous
+
+                 const recentTasks = recentlyCompletedTasks
+                     .filter(task => task.assignedEmployeeId === currentEmployeeId) // Only show recent tasks for the current employee
+                     .sort((a, b) => b.completedDate - a.completedDate)
+                     .slice(0, 3); // Get top 3 most recent
+
+                 if (recentTasks.length === 0) {
+                     const li = document.createElement('li'); li.textContent = 'No recent tasks.';
+                     li.style.cssText = 'color: #888; background: transparent; border: none;';
+                     sidebarRecentTasksList.appendChild(li); return;
+                 }
+
+                 recentTasks.forEach(task => {
+                     const listItem = document.createElement('li');
+                     listItem.innerHTML = `<strong>${task.title}</strong> <small>(${task.id})</small>`;
+                     listItem.title = `Completed on ${task.completedDate.toLocaleDateString()}`;
+                     listItem.dataset.taskId = task.id; // Add task ID for click handling
+                     sidebarRecentTasksList.appendChild(listItem);
+                 });
+            }
+
+            // == Sidebar Modals ==
+            function populateAllSkillsModal() {
+                if (!allSkillsListUl) return;
+                allSkillsListUl.innerHTML = ''; // Clear previous
+                if (employeeSkills.length === 0) {
+                    const li = document.createElement('li'); li.textContent = 'No skills listed.';
+                    li.style.cssText = 'color: #888; background: transparent; border: none;';
+                    allSkillsListUl.appendChild(li); return;
+                }
+                employeeSkills.forEach(skill => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = skill.name;
+                    listItem.dataset.skillId = skill.id;
+                    allSkillsListUl.appendChild(listItem);
+                });
+            }
+
+            function populateAllRecentTasksModal() {
+                 if (!allRecentTasksListUl) return;
+                 allRecentTasksListUl.innerHTML = ''; // Clear previous
+                 const allRecent = recentlyCompletedTasks
+                     .filter(task => task.assignedEmployeeId === currentEmployeeId) // Only show recent tasks for the current employee
+                     .sort((a, b) => b.completedDate - a.completedDate);
+
+
+                 if (allRecent.length === 0) {
+                     const li = document.createElement('li'); li.textContent = 'No recent tasks.';
+                     li.style.cssText = 'color: #888; background: transparent; border: none;';
+                     allRecentTasksListUl.appendChild(li); return;
+                 }
+                 allRecent.forEach(task => {
+                     const listItem = document.createElement('li');
+                     listItem.innerHTML = `<strong>${task.title}</strong> <small>(${task.id}) - ${task.completedDate.toLocaleDateString()}</small>`;
+                     listItem.dataset.taskId = task.id; // Add task ID for click handling
+                     allRecentTasksListUl.appendChild(listItem);
+                 });
+            }
+
+            function openAllSkillsModal() {
+                 populateAllSkillsModal(); // Populate before showing
+                 allSkillsModal.classList.add('show');
+            }
+             function openAllRecentTasksModal() {
+                 populateAllRecentTasksModal(); // Populate before showing
+                 allRecentTasksModal.classList.add('show');
+             }
+
+             // == Performance Summary Modal Functions (New) ==
+             function openPerformanceSummaryModal(taskId) {
+                 const task = recentlyCompletedTasks.find(t => t.id === taskId && t.assignedEmployeeId === currentEmployeeId);
+
+                 if (!task) {
+                     console.error(`Completed task not found for ID: ${taskId}`);
+                     return;
+                 }
+
+                 summaryTaskTitleSpan.textContent = task.title || 'N/A';
+                 summaryCompletedDateSpan.textContent = task.completedDate ? task.completedDate.toLocaleDateString() : 'N/A';
+                 summaryGraniteTextSpan.textContent = task.performanceSummary || 'No performance summary available.';
+
+                 performanceSummaryModal.classList.add('show');
+             }
+
+             function closePerformanceSummaryModal() {
+                 performanceSummaryModal.classList.remove('show');
+             }
+
+             // == Review Task Modal Functions (New) ==
+             function renderTasksAwaitingReview() {
+                 if (!tasksAwaitingReviewList) return;
+                 tasksAwaitingReviewList.innerHTML = ''; // Clear previous
+
+                 const tasksToReview = recentlyCompletedTasks.filter(task => task.requiresReview && employees.find(emp => emp.id === task.assignedEmployeeId)?.teamId === managerTeam); // Filter by requiresReview and manager's team
+
+                 if (tasksToReview.length === 0) {
+                     const li = document.createElement('li'); li.textContent = 'No tasks awaiting review.';
+                     li.style.cssText = 'color: #888; text-align: center; background: transparent; border: none;';
+                     tasksAwaitingReviewList.appendChild(li); return;
+                 }
+
+                 tasksToReview.forEach(task => {
+                     const listItem = document.createElement('li');
+                     const employee = employees.find(emp => emp.id === task.assignedEmployeeId);
+                     const employeeName = employee ? employee.name : 'Unknown Employee';
+                     listItem.innerHTML = `<strong>${task.title}</strong> by ${employeeName} <small>(${task.id})</small>`;
+                     listItem.dataset.taskId = task.id; // Add task ID for click handling
+                     tasksAwaitingReviewList.appendChild(listItem);
+                 });
+             }
+
+             function openReviewTaskModal(taskId) {
+                 const task = recentlyCompletedTasks.find(t => t.id === taskId && employees.find(emp => emp.id === t.assignedEmployeeId)?.teamId === managerTeam);
+
+                 if (!task) {
+                     console.error(`Completed task not found for review: ${taskId}`);
+                     return;
+                 }
+
+                 currentReviewTaskId = taskId; // Set the task being reviewed
+
+                 const employee = employees.find(emp => emp.id === task.assignedEmployeeId);
+                 const employeeName = employee ? employee.name : 'Unknown Employee';
+
+                 reviewTaskTitleSpan.textContent = task.title || 'N/A';
+                 reviewTaskIdSpan.textContent = task.id || 'N/A';
+                 reviewTaskEmployeeSpan.textContent = employeeName;
+                 reviewTaskCompletedDateSpan.textContent = task.completedDate ? task.completedDate.toLocaleDateString() : 'N/A';
+
+                 // Clear previous feedback
+                 managerFeedbackTextarea.value = '';
+                 graniteFeedbackTextarea.value = '';
+
+                 reviewTaskModal.classList.add('show');
+             }
+
+             function closeReviewTaskModal() {
+                 reviewTaskModal.classList.remove('show');
+                 currentReviewTaskId = null;
+             }
+
+             function handleSubmitReview() {
+                 if (!currentReviewTaskId) return;
+
+                 const taskToReview = recentlyCompletedTasks.find(t => t.id === currentReviewTaskId);
+                 if (!taskToReview) {
+                     console.error(`Task not found for submitting review: ${currentReviewTaskId}`);
+                     return;
+                 }
+
+                 // Capture feedback
+                 const managerFeedback = managerFeedbackTextarea.value.trim();
+                 const graniteFeedback = graniteFeedbackTextarea.value.trim();
+
+                 if (!managerFeedback) {
+                     alert("Please provide performance feedback.");
+                     return;
+                 }
+
+                 // Update task data (simulate)
+                 taskToReview.managerFeedback = managerFeedback;
+                 taskToReview.graniteFeedback = graniteFeedback;
+                 taskToReview.requiresReview = false; // Mark as reviewed
+
+                 console.log(`Review submitted for task ${currentReviewTaskId}...`);
+                 console.log("Manager Feedback:", managerFeedback);
+                 console.log("Granite Feedback:", graniteFeedback);
+                 // ---- TODO: Send review data to backend/temporary storage ----
+                 // ---- TODO: Trigger AI analysis based on this feedback ----
+
+                 renderTasksAwaitingReview(); // Update the list of tasks awaiting review
+                 closeReviewTaskModal();
+                 alert(`Review for task ${currentReviewTaskId} submitted.`);
+             }
+
+
+            // == Task Details / Feedback Functions ==
+            function openTaskDetailsModal(taskId, showFeedbackView = false) {
+                let task = assignedTasks.find(t => t.id === taskId) || availableTasks.find(t => t.id === taskId);
+                let isAssigned = assignedTasks.some(t => t.id === taskId);
+                let isAvailable = availableTasks.some(t => t.id === taskId);
+
+                currentDetailTaskId = taskId;
+                taskFeedbackMessages = [];
+                hasUserProvidedFeedback = false; // Reset feedback flag
+
+                if (task) {
+                    // Populate Details View (always populated)
+                    taskDetailsTitle.textContent = task.title || "Task Details";
+                    taskDetailsId.textContent = task.id || "N/A";
+                    taskDetailsDifficulty.textContent = task.difficulty || "N/A";
+                    const sanitizedDescription = (task.description || "No description available.").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    taskDetailsDescription.innerHTML = sanitizedDescription;
+                    taskDetailsSkillsList.innerHTML = '';
+                    if (task.skills && task.skills.length > 0) {
+                        task.skills.forEach(skillName => {
+                            const li = document.createElement('li');
+                            li.textContent = skillName.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                            taskDetailsSkillsList.appendChild(li);
+                        });
+                    } else {
+                         const li = document.createElement('li'); li.textContent = 'No specific skills listed.';
+                         li.style.cssText = 'background-color: transparent; color: #888;'; taskDetailsSkillsList.appendChild(li);
+                    }
+                    const sanitizedGuidance = (task.graniteAdvice || "No guidance available...").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    taskDetailsGraniteText.innerHTML = sanitizedGuidance;
+
+                    // Populate Suggested Skills to Learn (New)
+                    renderSuggestedSkillsToLearn(task);
+
+
+                    taskDetailsTeam.textContent = task.team || "N/A";
+
+                    // Populate and make goal clickable
+                    const goalId = task.goal;
+                    const goal = managerGoals.find(g => g.id === goalId);
+                    taskDetailsGoalSpan.textContent = goal ? goal.title : (goalId || "N/A");
+                    taskDetailsGoalSpan.dataset.goalId = goalId || "";
+                    taskDetailsGoalSpan.style.cursor = goalId ? "pointer" : "default";
+                    taskDetailsGoalSpan.style.textDecoration = goalId ? "underline" : "none";
+                    // Remove previous listener before adding new one
+                    taskDetailsGoalSpan.onclick = null;
+                    if(goalId) {
+                        taskDetailsGoalSpan.onclick = () => openGoalDetailsModal(goalId);
+                    }
+
+
+                    // Set Initial Modal State based on parameter and task status
+                    finalizeTaskButton.style.display = 'none';
+                    addTaskFromDetailsButton.style.display = 'none';
+                    completeTaskButton.style.display = 'none';
+
+                    if (showFeedbackView && isAssigned) {
+                         switchToFeedbackView();
+                    } else {
+                        taskDetailsContent.style.display = 'flex';
+                        taskFeedbackSection.style.display = 'none';
+                        if (isAssigned) {
+                             completeTaskButton.style.display = 'block';
+                        } else if (isAvailable) {
+                             addTaskFromDetailsButton.style.display = 'block';
+                        }
+                    }
+
+                    taskDetailsModal.classList.add('show');
+                } else {
+                    // Handle error case
+                    console.error(`Task details not found for ID: ${taskId}`);
+                    taskDetailsTitle.textContent = "Error";
+                    taskDetailsDescription.textContent = "Could not load task details.";
+                    completeTaskButton.style.display = 'none';
+                    finalizeTaskButton.style.display = 'none';
+                    addTaskFromDetailsButton.style.display = 'none';
+                    taskDetailsModal.classList.add('show');
+                }
+            }
+
+            function renderSuggestedSkillsToLearn(task) {
+                 taskDetailsSuggestedSkillsList.innerHTML = ''; // Clear previous
+
+                 // Simple simulation: If task difficulty is Hard or Medium and employee doesn't have related skills, suggest them
+                 const employee = employees.find(e => e.id === currentEmployeeId);
+                 const employeeSkillNames = employee ? employee.skills.map(s => s.toLowerCase()) : [];
+                 const taskSkillNames = task.skills ? task.skills.map(s => s.toLowerCase()) : [];
+
+                 const suggestedSkills = taskSkillNames.filter(skillName => !employeeSkillNames.includes(skillName));
+
+                 if ((task.difficulty === 'Hard' || task.difficulty === 'Medium') && suggestedSkills.length > 0) {
+                     taskDetailsSuggestedSkillsSection.style.display = 'block';
+                     suggestedSkills.forEach(skillName => {
+                         const li = document.createElement('li');
+                         li.textContent = skillName.charAt(0).toUpperCase() + skillName.slice(1); // Capitalize
+                         taskDetailsSuggestedSkillsList.appendChild(li);
+                     });
+                 } else {
+                     taskDetailsSuggestedSkillsSection.style.display = 'none';
+                 }
+            }
+
+            function closeTaskDetailsModal() {
+                taskDetailsModal.classList.remove('show');
+                currentDetailTaskId = null;
+                // Reset view to details when closing manually
+                taskDetailsContent.style.display = 'flex';
+                taskFeedbackSection.style.display = 'none';
+                completeTaskButton.style.display = 'none';
+                finalizeTaskButton.style.display = 'none';
+                addTaskFromDetailsButton.style.display = 'none';
+            }
+
+            function switchToFeedbackView() {
+                if (!currentDetailTaskId) return;
+                taskDetailsContent.style.display = 'none';
+                taskFeedbackSection.style.display = 'flex';
+                completeTaskButton.style.display = 'none';
+                addTaskFromDetailsButton.style.display = 'none';
+                finalizeTaskButton.style.display = 'block';
+                finalizeTaskButton.disabled = true; // Start disabled
+                hasUserProvidedFeedback = false; // Reset flag
+                taskFeedbackChatLog.innerHTML = '';
+                taskFeedbackMessages = [];
+                const initialPrompt = "You've completed this task! Do you have any feedback for me on it? How did it go? What went well, or not so well? What could be improved?";
+                appendFeedbackMessage(initialPrompt, 'granite');
+                taskFeedbackInput.value = '';
+                adjustTextareaHeight(taskFeedbackInput);
+                taskFeedbackInput.focus();
+            }
+
+            function appendFeedbackMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('chat-message');
+                const sanitizedText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                taskFeedbackMessages.push({ sender, text: sanitizedText });
+                if (sender === 'user') {
+                    messageDiv.classList.add('user-message');
+                    messageDiv.innerHTML = sanitizedText;
+                    hasUserProvidedFeedback = true; // Mark that user has sent feedback
+                    finalizeTaskButton.disabled = false; // Enable finalize button
+                } else {
+                    messageDiv.classList.add('granite-message');
+                    messageDiv.innerHTML = `<strong>Granite:</strong> ${sanitizedText}`;
+                }
+                taskFeedbackChatLog.appendChild(messageDiv);
+                taskFeedbackChatLog.scrollTop = taskFeedbackChatLog.scrollHeight;
+            }
+
+            function handleFeedbackSend() {
+                 const messageText = taskFeedbackInput.value.trim();
+                if (messageText === '') return;
+                appendFeedbackMessage(messageText, 'user'); // This now enables the finalize button
+                taskFeedbackInput.value = '';
+                adjustTextareaHeight(taskFeedbackInput);
+                taskFeedbackSendButton.disabled = true;
+                setTimeout(() => {
+                    appendFeedbackMessage("Thanks for the feedback!", 'granite');
+                    taskFeedbackSendButton.disabled = false;
+                }, 500);
+            }
+
+            function handleFinalizeTask() {
+                 if (!currentDetailTaskId || !hasUserProvidedFeedback) return; // Check if feedback was given
+                 const taskToComplete = assignedTasks.find(task => task.id === currentDetailTaskId);
+
+                 console.log(`Finalizing task ${currentDetailTaskId}...`);
+                 console.log("Feedback provided:", taskFeedbackMessages);
+                 // ---- TODO: Send task ID and feedbackMessages to backend/temporary storage ----
+                 // ---- TODO: Trigger AI analysis of feedback for skill updates/manager insights ----
+
+
+                 // Move task from assigned to recently completed
+                 if (taskToComplete) {
+                     assignedTasks = assignedTasks.filter(task => task.id !== currentDetailTaskId);
+                     taskToComplete.completedDate = new Date(); // Mark completion time
+                     recentlyCompletedTasks.push(taskToComplete);
+                 }
+
+                 renderEmployeeTaskBoard(); // Update the main task list
+                 renderSidebarRecentTasks(); // Update sidebar
+
+                 // Re-enable the 'Add' button in the find tasks modal
+                 const modalButton = modalTaskList.querySelector(`.modal-task-item[data-task-id="${currentDetailTaskId}"] .modal-add-task-button`);
+                 if (modalButton) modalButton.disabled = false;
+
+                 closeTaskDetailsModal(); // Close the modal
+                 alert(`Task ${currentDetailTaskId} finalized!`);
+            }
+
+            // == Manager View Functions ==
+            function renderManagerGoals() {
+                if (!managerGoalsListContainer) return;
+                managerGoalsListContainer.innerHTML = ''; // Clear previous
+                if (managerGoals.length === 0) {
+                     const p = document.createElement('p'); p.textContent = 'No goals defined yet.';
+                     p.style.color = '#888'; managerGoalsListContainer.appendChild(p); return;
+                }
+                 managerGoals.forEach(goal => {
+                     const div = document.createElement('div');
+                     div.classList.add('goal-item'); // Use a specific class for goals
+                     div.dataset.goalId = goal.id; // Add goal ID for click handling
+                     div.innerHTML = `
+                         <strong>${goal.title}</strong>
+                         <p style="font-size: 12px; margin-top: 5px; color: #666;">
+                             Deadline: ${goal.deadline} | Status: ${goal.status}
+                         </p>
+                         <small class="element-id-label">(Click for details)</small>
+                     `;
+                     managerGoalsListContainer.appendChild(div);
+                 });
+            }
+            function renderManagerTeamOverview() {
+                if (!managerTeamListContainer) return;
+                managerTeamListContainer.innerHTML = ''; // Clear previous
+                // Filter employees by manager's team
+                const teamMembers = employees.filter(emp => emp.teamId === managerTeam);
+
+                if (teamMembers.length === 0) {
+                    const li = document.createElement('li'); li.textContent = 'No team members found.';
+                    li.style.cssText = 'color: #888; background: transparent; border: none;';
+                    managerTeamListContainer.appendChild(li); return;
+                }
+                teamMembers.forEach(emp => {
+                     const listItem = document.createElement('li');
+                     listItem.textContent = emp.name;
+                     listItem.dataset.employeeId = emp.id;
+                     managerTeamListContainer.appendChild(listItem);
+                });
+            }
+             function renderExternalContributors() {
+                 if (!managerContributorsListContainer) return;
+                 managerContributorsListContainer.innerHTML = ''; // Clear previous
+
+                 const contributorIds = new Set(); // Use Set to avoid duplicates
+
+                 // Find tasks related to manager's goals that were completed by external employees
+                 managerGoals.forEach(goal => {
+                     recentlyCompletedTasks.forEach(task => { // Check recently completed tasks
+                         if (task.goal === goal.id && task.assignedEmployeeId && employees.find(e => e.id === task.assignedEmployeeId)?.teamId !== managerTeam) {
+                             contributorIds.add(task.assignedEmployeeId);
+                         }
+                     });
+                      // Also check assigned tasks that are not yet completed but assigned externally
+                     assignedTasks.forEach(task => {
+                         if (task.goal === goal.id && task.assignedEmployeeId && employees.find(e => e.id === task.assignedEmployeeId)?.teamId !== managerTeam) {
+                             contributorIds.add(task.assignedEmployeeId);
+                         }
+                     });
+                 });
+
+
+                 if (contributorIds.size === 0) {
+                     const li = document.createElement('li'); li.textContent = 'No external contributors.';
+                     li.style.cssText = 'color: #888; background: transparent; border: none;';
+                     managerContributorsListContainer.appendChild(li); return;
+                 }
+
+                 contributorIds.forEach(empId => {
+                     const employee = employees.find(e => e.id === empId);
+                     if (employee) {
+                         const listItem = document.createElement('li');
+                         listItem.textContent = `${employee.name} (${employee.teamId || 'Unknown Team'})`;
+                         listItem.dataset.employeeId = empId;
+                         managerContributorsListContainer.appendChild(listItem);
+                     }
+                     // TODO: Add contribution details here if available in data
+                 });
+             }
+
+              // == Employee Details Sidebar Function ==
+              function renderEmployeeDetailsSidebar(employeeId) {
+                  const employee = employees.find(e => e.id === employeeId);
+                  const placeholder = employeeDetailsContentArea.querySelector('.placeholder-text');
+
+                  // Clear previous details and hide sections
+                  if(placeholder) placeholder.style.display = 'none';
+                  employeeDetailsSkillsList.innerHTML = '';
+                  employeeDetailsTasksList.innerHTML = '';
+                  employeeDetailsRecentTasksList.innerHTML = ''; // Clear recent tasks list
+                  employeeDetailsSkillsSection.style.display = 'none';
+                  employeeDetailsTasksSection.style.display = 'none';
+                  employeeDetailsRecentTasksSection.style.display = 'none'; // Hide recent tasks section
+
+                  if (!employee) {
+                      if(placeholder) placeholder.style.display = 'block';
+                      placeholder.textContent = 'Employee details not found.';
+                      return;
+                  }
+
+                  // Store the current employee ID on the sidebar element
+                  employeeDetailsSidebar.dataset.currentEmployee = employeeId;
+
+
+                  // Display Skills
+                  if (employee.skills && employee.skills.length > 0) {
+                      const topSkills = employee.skills.slice(0, 3);
+                      topSkills.forEach(skillName => {
+                          const li = document.createElement('li');
+                          li.textContent = skillName;
+                          // Add data attribute for skill ID if available in your data model later
+                          // li.dataset.skillId = skill.id;
+                          employeeDetailsSkillsList.appendChild(li);
+                      });
+                      employeeDetailsSkillsSection.style.display = 'block';
+                  }
+
+                  // Display Current Tasks
+                  const employeeTasks = assignedTasks.filter(task => task.assignedEmployeeId === employeeId).slice(0, 3);
+                  if (employeeTasks.length > 0) {
+                       employeeTasks.forEach(task => {
+                           const li = document.createElement('li');
+                           li.innerHTML = `<strong>${task.title}</strong> (ID: ${task.id})`;
+                           employeeDetailsTasksList.appendChild(li);
+                       });
+                       employeeDetailsTasksSection.style.display = 'block';
+                  }
+
+                  // Display Recent Contributions (New)
+                  const employeeRecentTasks = recentlyCompletedTasks
+                      .filter(task => task.assignedEmployeeId === employeeId)
+                      .sort((a, b) => b.completedDate - a.completedDate)
+                      .slice(0, 3);
+
+                  if (employeeRecentTasks.length > 0) {
+                       employeeRecentTasks.forEach(task => {
+                           const li = document.createElement('li');
+                           li.innerHTML = `<strong>${task.title}</strong> <small>(${task.id})</small>`;
+                           employeeDetailsRecentTasksList.appendChild(li);
+                       });
+                       employeeDetailsRecentTasksSection.style.display = 'block';
+                  }
+
+
+                  // If no details were found, show a message
+                  if (employeeDetailsSkillsList.children.length === 0 &&
+                      employeeDetailsTasksList.children.length === 0 &&
+                      employeeDetailsRecentTasksList.children.length === 0) {
+                      if(placeholder) placeholder.style.display = 'block';
+                      placeholder.textContent = `${employee.name} has no skills or tasks listed.`;
+                  }
+              }
+              function clearEmployeeDetailsSidebar() {
+                   const placeholder = employeeDetailsContentArea.querySelector('.placeholder-text');
+                   if(placeholder) placeholder.style.display = 'block';
+                   placeholder.textContent = 'Click a team member or contributor to view details.';
+                   employeeDetailsSkillsList.innerHTML = '';
+                   employeeDetailsTasksList.innerHTML = '';
+                   employeeDetailsRecentTasksList.innerHTML = '';
+                   employeeDetailsSkillsSection.style.display = 'none';
+                   employeeDetailsTasksSection.style.display = 'none';
+                   employeeDetailsRecentTasksSection.style.display = 'none';
+               }
+
+
+            // == Goal Details Modal Functions ==
+            function openGoalDetailsModal(goalId) {
+                const goal = managerGoals.find(g => g.id === goalId);
+                if (!goal) {
+                    console.error(`Goal details not found for ID: ${goalId}`);
+                    return;
+                }
+
+                currentGoalId = goalId; // Store current goal ID
+
+                goalDetailsTitle.textContent = goal.title || "Goal Details";
+                goalDetailsId.textContent = goal.id || "N/A";
+                goalDetailsDeadline.textContent = goal.deadline || "N/A";
+                goalDetailsStatus.textContent = goal.status || "N/A";
+
+                // Show/Hide Manager Name based on current view
+                if (!isManagerView && goal.managerName) {
+                    goalDetailsManagerNameSpan.textContent = goal.managerName;
+                    goalDetailsManagerP.style.display = 'block';
+                } else {
+                    goalDetailsManagerP.style.display = 'none';
+                }
+
+                // Populate associated tasks
+                renderGoalDetailsTaskList(goalId); // Use separate function
+
+                // Show/Hide Add Task button based on current view
+                addTaskToGoalButton.style.display = isManagerView ? 'block' : 'none';
+
+                goalDetailsModal.classList.add('show');
+            }
+
+             function renderGoalDetailsTaskList(goalId) {
+                 const goal = managerGoals.find(g => g.id === goalId);
+                 goalDetailsTasksList.innerHTML = ''; // Clear previous
+                 if (goal && goal.associatedTaskIds && goal.associatedTaskIds.length > 0) {
+                     goal.associatedTaskIds.forEach(taskId => {
+                         // Find task in assigned or available lists
+                         const task = assignedTasks.find(t => t.id === taskId) || availableTasks.find(t => t.id === taskId);
+                         if (task) {
+                             const li = document.createElement('li');
+                             let employeeName = 'Unassigned';
+                             if (task.assignedEmployeeId) {
+                                 const employee = employees.find(e => e.id === task.assignedEmployeeId);
+                                 employeeName = employee ? employee.name : 'Unknown Employee';
+                             }
+                             li.innerHTML = `
+                                 ${task.title} (ID: ${task.id})
+                                 <span class="task-employee">[${employeeName}]</span>
+                             `;
+                             goalDetailsTasksList.appendChild(li);
+                         }
+                     });
+                 } else {
+                      const li = document.createElement('li');
+                      li.textContent = 'No tasks currently associated with this goal.';
+                      li.style.color = '#888';
+                      goalDetailsTasksList.appendChild(li);
+                 }
+             }
+
+            // == Add Task To Goal Modal Functions ==
+            function openAddTaskModal() {
+                if (!currentGoalId) return; // Need a goal context
+                addTaskGoalIdInput.value = currentGoalId; // Pre-fill hidden input
+                addTaskForm.reset(); // Clear form
+                // Hide suggestion area initially
+                addTaskGraniteSuggestionArea.style.display = 'none'; // Use new ID
+                addTaskGraniteTitleSuggestionContainer.style.display = 'none'; // Use new ID
+                addTaskGraniteDescSuggestionContainer.style.display = 'none'; // Use new ID
+                addTaskGraniteSkillsSuggestionContainer.style.display = 'none'; // New
+                addTaskGraniteDifficultySuggestionContainer.style.display = 'none'; // New
+
+                addTaskToGoalModal.classList.add('show');
+            }
+            function closeAddTaskModal() {
+                 addTaskToGoalModal.classList.remove('show');
+            }
+
+            function handleAddTaskFormSubmit(event) {
+                event.preventDefault();
+                const formData = new FormData(addTaskForm);
+                const goalId = formData.get('goalId');
+                // Skills and difficulty are now suggested by Granite based on description
+                const suggestedSkills = addTaskGraniteSuggestedSkillsSpan.textContent.split(',').map(s => s.trim()).filter(s => s);
+                const suggestedDifficulty = addTaskGraniteSuggestedDifficultySpan.textContent || 'Medium'; // Default if no suggestion
+
+                let taskTitle = addTaskTitleInput.value.trim();
+                const taskDescription = addTaskDescriptionInput.value.trim();
+
+                // Basic validation
+                if (!taskDescription) {
+                    alert("Please fill in the Description.");
+                    return;
+                }
+
+                // Use default title if none provided
+                if (!taskTitle) {
+                    taskTitle = `New Task (${Date.now()})`; // Simple default title
+                }
+
+
+                // Create new task object
+                const newTaskId = `task${Date.now()}`; // Simple unique ID generation
+                const newTask = {
+                    id: newTaskId,
+                    title: taskTitle,
+                    difficulty: suggestedDifficulty, // Use suggested difficulty
+                    description: taskDescription,
+                    skills: suggestedSkills, // Use suggested skills
+                    team: managerTeam, // Assign manager's team
+                    goal: goalId,
+                    graniteAdvice: formData.get('graniteAdvice') || '',
+                    assignedEmployeeId: null, // Starts unassigned
+                    isMandatory: false, // Default to not mandatory when adding from manager view
+                    isTopChoice: false, // Default to not top choice
+                    requiresReview: true // New tasks added by manager require review by default
+                };
+
+                // Add to available tasks
+                availableTasks.push(newTask);
+
+                // Add task ID to the goal's list
+                const goal = managerGoals.find(g => g.id === goalId);
+                if (goal) {
+                    goal.associatedTaskIds.push(newTaskId);
+                    // Refresh the goal details modal task list IF it's still open
+                    if (goalDetailsModal.classList.contains('show') && currentGoalId === goalId) {
+                         renderGoalDetailsTaskList(goalId);
+                    }
+                }
+
+                console.log("New task added:", newTask);
+                renderTasksAwaitingReview(); // Update manager's review list
+                closeAddTaskModal();
+                alert(`Task "${newTask.title}" added to goal ${goalId} and available tasks.`);
+            }
+
+            // Simulate Granite AI Suggestions for Add Task Modal (New)
+            function simulateAddTaskGraniteSuggestions(description) {
+                 const keywords = {
+                     'design': { skills: ['UI Design', 'User Experience'], difficulty: 'Hard', title: 'Design Mockups' },
+                     'test': { skills: ['Testing', 'Quality Assurance'], difficulty: 'Medium', title: 'Write Tests' },
+                     'api': { skills: ['API Design', 'Backend Development'], difficulty: 'Hard', title: 'Develop API Endpoint' },
+                     'database': { skills: ['SQL', 'Database Management'], difficulty: 'Medium', title: 'Manage Database' },
+                     'frontend': { skills: ['React Development', 'JavaScript'], difficulty: 'Medium', title: 'Implement UI' },
+                     'backend': { skills: ['Node.js', 'Python'], difficulty: 'Medium', title: 'Develop Backend Logic' },
+                     'document': { skills: ['Technical Writing'], difficulty: 'Easy', title: 'Update Documentation' },
+                     'report': { skills: ['Data Analysis', 'Communication'], difficulty: 'Easy', title: 'Create Report' }
+                 };
+                 let suggestedSkills = new Set();
+                 let suggestedDifficulty = 'Medium'; // Default
+                 let suggestedTitle = '';
+
+                 const lowerDesc = description.toLowerCase();
+                 let matchedKeyword = null;
+
+                 for (const keyword in keywords) {
+                     if (lowerDesc.includes(keyword)) {
+                         matchedKeyword = keyword;
+                         keywords[keyword].skills.forEach(skill => suggestedSkills.add(skill));
+                         suggestedDifficulty = keywords[keyword].difficulty;
+                         suggestedTitle = keywords[keyword].title;
+                         break; // Use the first matching keyword for simplicity
+                     }
+                 }
+
+                 // Update suggestion areas
+                 addTaskGraniteSuggestedSkillsSpan.textContent = Array.from(suggestedSkills).join(', ') || 'No skills suggested.';
+                 addTaskGraniteSuggestedDifficultySpan.textContent = suggestedDifficulty;
+
+                 if (suggestedTitle) {
+                     addTaskGraniteSuggestedTitleSpan.textContent = suggestedTitle;
+                     addTaskGraniteTitleSuggestionContainer.style.display = 'block';
+                 } else {
+                     addTaskGraniteTitleSuggestionContainer.style.display = 'none';
+                 }
+
+                 // Hide description suggestion if no strong keyword match, or simulate a generic one
+                 if (!matchedKeyword && description.length > 20) {
+                     addTaskGraniteSuggestedDescSpan.textContent = description.trim() + "\n\nPlease ensure all acceptance criteria are met.";
+                     addTaskGraniteDescSuggestionContainer.style.display = 'block';
+                 } else {
+                     addTaskGraniteDescSuggestionContainer.style.display = 'none';
+                 }
+
+                 addTaskGraniteSkillsSuggestionContainer.style.display = 'block';
+                 addTaskGraniteDifficultySuggestionContainer.style.display = 'block';
+                 addTaskGraniteSuggestionArea.style.display = 'block'; // Show the whole suggestion area
+
+            }
+
+
+            // == Reporting Modal Function ==
+            function openReportingModal() {
+                // TODO: Add logic here to fetch/generate actual reporting data
+                console.log("Opening Reporting Modal (placeholder)");
+                reportingModal.classList.add('show');
+            }
+
+             // == Skill Details Modal Function (New) ==
+             function openSkillDetailsModal(skillName, employeeId) {
+                 const employee = employees.find(e => e.id === employeeId);
+                 const skillData = employeeSkills.find(s => s.name === skillName); // Find skill by name (adjust if using IDs)
+
+                 if (!employee || !skillData) {
+                     console.error("Could not find employee or skill data for details.");
+                     return;
+                 }
+
+                 skillDetailsName.textContent = `${skillName} (${employee.name})`;
+                 skillDetailsJustification.textContent = skillData.justification || "No specific justification available.";
+                 skillDetailsModal.classList.add('show');
+             }
+
+
+            // --- Event Listeners ---
+
+            // Generic Modal Close Logic
+            function addModalCloseListeners(modalElement) {
+                if (!modalElement) return;
+                const closeButton = modalElement.querySelector('.modal-close-button');
+                if (closeButton) {
+                    if (modalElement.id === 'task-details-modal') {
+                         closeButton.addEventListener('click', closeTaskDetailsModal);
+                    } else if (modalElement.id === 'performance-summary-modal') { // New close listener
+                         closeButton.addEventListener('click', closePerformanceSummaryModal);
+                    } else if (modalElement.id === 'review-task-modal') { // New close listener
+                         closeButton.addEventListener('click', closeReviewTaskModal);
+                    }
+                    else {
+                         // Use optional chaining for safety
+                         closeButton.addEventListener('click', () => modalElement?.classList.remove('show'));
+                    }
+                }
+                modalElement.addEventListener('click', (event) => {
+                     if (event.target === modalElement) {
+                         if (modalElement.id === 'task-details-modal') {
+                              closeTaskDetailsModal();
+                         } else if (modalElement.id === 'performance-summary-modal') { // New overlay close
+                              closePerformanceSummaryModal();
+                         } else if (modalElement.id === 'review-task-modal') { // New overlay close
+                              closeReviewTaskModal();
+                         }
+                         else {
+                              modalElement.classList.remove('show');
+                         }
+                     }
+                });
+            }
+            addModalCloseListeners(findTaskModal);
+            addModalCloseListeners(guidanceModal);
+            addModalCloseListeners(taskDetailsModal);
+            addModalCloseListeners(allSkillsModal);
+            addModalCloseListeners(allRecentTasksModal);
+            addModalCloseListeners(goalDetailsModal);
+            addModalCloseListeners(addTaskToGoalModal);
+            addModalCloseListeners(reportingModal);
+            addModalCloseListeners(skillDetailsModal); // Add listener for new modal
+            addModalCloseListeners(performanceSummaryModal); // Add listener for new performance summary modal
+            addModalCloseListeners(reviewTaskModal); // Add listener for new review task modal
+
+
+            // Find Task Modal Specific Listeners
+            if (findTasksButton) findTasksButton.addEventListener('click', openFindTaskModal);
+            else console.error("Find Tasks Button not found!");
+            if (modalTaskList) {
+                modalTaskList.addEventListener('click', (event) => {
+                    const target = event.target;
+                    const listItem = target.closest('.modal-task-item');
+                    if (!listItem || !listItem.dataset.taskId) return;
+                    const taskId = listItem.dataset.taskId;
+                    if (target.classList.contains('modal-add-task-button')) { addTaskToCurrentList(taskId); }
+                    else if (target.classList.contains('modal-details-button')) { openTaskDetailsModal(taskId); }
+                });
+            }
+
+            // Guidance Modal Listeners
+            if (guidanceButton) guidanceButton.addEventListener('click', openGuidanceModal);
+            if (managerGuidanceButton) managerGuidanceButton.addEventListener('click', openGuidanceModal);
+            else console.error("Guidance Button not found!");
+            if (guidanceSendButton) guidanceSendButton.addEventListener('click', handleGuidanceSend);
+            if (guidanceInput) {
+                 guidanceInput.addEventListener('input', () => adjustTextareaHeight(guidanceInput));
+                 guidanceInput.addEventListener('keypress', (event) => {
+                     if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); handleGuidanceSend(); }
+                 });
+            }
+
+            // Sidebar "View More" Button Listeners
+            if (viewAllSkillsButton) viewAllSkillsButton.addEventListener('click', openAllSkillsModal);
+            if (viewAllRecentTasksButton) viewAllRecentTasksButton.addEventListener('click', openAllRecentTasksModal);
+
+            // Current Tasks List Listener (for details AND direct complete)
+            if (currentTasksListContainer) {
+                currentTasksListContainer.addEventListener('click', (event) => {
+                    const taskItem = event.target.closest('.task-item');
+                    if (!taskItem || !taskItem.dataset.taskId) return; // Exit if not on a task item
+
+                    const taskId = taskItem.dataset.taskId;
+
+                    // Check if the click was on the 'Complete' button
+                    const completeButton = event.target.closest('.task-item-complete-button');
+
+                    if (completeButton) {
+                         // Clicked the 'Complete' button directly
+                         openTaskDetailsModal(taskId, true); // Open modal and immediately show feedback view
+                    } else {
+                          // Clicked the main content area for details
+                          openTaskDetailsModal(taskId, false); // Open modal showing details view first
+                    }
+                });
+            }
+
+            // Sidebar Recent Tasks List Listener (New)
+            if (sidebarRecentTasksList) {
+                sidebarRecentTasksList.addEventListener('click', (event) => {
+                    const listItem = event.target.closest('li');
+                    if (listItem && listItem.dataset.taskId) {
+                        openPerformanceSummaryModal(listItem.dataset.taskId); // Open the new performance summary modal
+                    }
+                });
+            }
+
+
+            // Task Details Modal - Button Listeners & Goal Link
+            if (completeTaskButton) {
+                completeTaskButton.addEventListener('click', switchToFeedbackView); // Switch view
+            }
+            if (finalizeTaskButton) {
+                finalizeTaskButton.addEventListener('click', handleFinalizeTask); // Finalize
+            }
+             if (addTaskFromDetailsButton) { // Listener for the new Add button
+                 addTaskFromDetailsButton.addEventListener('click', () => {
+                     if (currentDetailTaskId) {
+                         addTaskToCurrentList(currentDetailTaskId);
+                         closeTaskDetailsModal(); // Close modal after adding
+                     }
+                 });
+             }
+             // Goal link listener added dynamically in openTaskDetailsModal
+
+            // Task Feedback Chat Listeners
+             if (taskFeedbackSendButton) {
+                 taskFeedbackSendButton.addEventListener('click', handleFeedbackSend);
+             }
+             if (taskFeedbackInput) {
+                 taskFeedbackInput.addEventListener('input', () => adjustTextareaHeight(taskFeedbackInput));
+                 taskFeedbackInput.addEventListener('keypress', (event) => {
+                     if (event.key === 'Enter' && !event.shiftKey) {
+                         event.preventDefault();
+                         handleFeedbackSend();
+                     }
+                 });
+             }
+
+             // View Switch Listener on Circle (New)
+             if (employeeImagePlaceholder) {
+                 employeeImagePlaceholder.addEventListener('click', () => {
+                     if (isManagerView) {
+                         showEmployeeView();
+                     } else {
+                         showManagerView();
+                     }
+                 });
+             }
+
+
+            // Manager Goals List Listener
+            if (managerGoalsListContainer) {
+                managerGoalsListContainer.addEventListener('click', (event) => {
+                    const goalItem = event.target.closest('.goal-item');
+                    if (goalItem && goalItem.dataset.goalId) {
+                        openGoalDetailsModal(goalItem.dataset.goalId);
+                    }
+                });
+            }
+
+            // Manager Sidebar Listeners (Team & Contributors) - New
+            function handleEmployeeClick(event) {
+                const listItem = event.target.closest('li');
+                if (listItem && listItem.dataset.employeeId) {
+                    renderEmployeeDetailsSidebar(listItem.dataset.employeeId);
+                }
+            }
+            if (managerTeamListContainer) {
+                managerTeamListContainer.addEventListener('click', handleEmployeeClick);
+            }
+             if (managerContributorsListContainer) {
+                managerContributorsListContainer.addEventListener('click', handleEmployeeClick);
+             }
+
+             // Employee Details Sidebar - Skills Listener (New)
+             if (employeeDetailsSkillsList) {
+                 employeeDetailsSkillsList.addEventListener('click', (event) => {
+                      const listItem = event.target.closest('li');
+                      // Find the parent employee ID from the sidebar list that triggered the details view
+                      const clickedEmployeeId = employeeDetailsSidebar.dataset.currentEmployee;
+                      if (listItem && clickedEmployeeId) {
+                         openSkillDetailsModal(listItem.textContent, clickedEmployeeId);
+                      }
+                 });
+             }
+
+             // Tasks Awaiting Review List Listener (New)
+             if (tasksAwaitingReviewList) {
+                 tasksAwaitingReviewList.addEventListener('click', (event) => {
+                     const listItem = event.target.closest('li');
+                     if (listItem && listItem.dataset.taskId) {
+                         openReviewTaskModal(listItem.dataset.taskId); // Open the new review modal
+                     }
+                 });
+             }
+
+
+            // Goal Details - Add Task Button Listener
+             if (addTaskToGoalButton) {
+                 addTaskToGoalButton.addEventListener('click', openAddTaskModal);
+             }
+
+            // Add Task Form Listeners
+            if (addTaskForm) {
+                addTaskForm.addEventListener('submit', handleAddTaskFormSubmit);
+            }
+            // Listener for description input -> skill/difficulty/title suggestion (New Logic)
+            if (addTaskDescriptionInput) {
+                addTaskDescriptionInput.addEventListener('input', (e) => {
+                     // Simulate Granite suggestions based on description
+                     simulateAddTaskGraniteSuggestions(e.target.value);
+                });
+                // No blur listener needed now as suggestions update on input
+            }
+            // Listeners for using suggestions (New IDs)
+            if (addTaskUseTitleSuggestionButton) {
+                addTaskUseTitleSuggestionButton.addEventListener('click', () => {
+                     addTaskTitleInput.value = addTaskGraniteSuggestedTitleSpan.textContent;
+                     addTaskGraniteTitleSuggestionContainer.style.display = 'none'; // Hide after use
+                });
+            }
+             if (addTaskUseDescSuggestionButton) {
+                 addTaskUseDescSuggestionButton.addEventListener('click', () => {
+                      addTaskDescriptionInput.value = addTaskGraniteSuggestedDescSpan.textContent;
+                      adjustTextareaHeight(addTaskDescriptionInput); // Adjust height after setting value
+                      addTaskGraniteDescSuggestionContainer.style.display = 'none'; // Hide after use
+                 });
+             }
+
+            // Reporting Dash Button Listener
+             if (reportingDashButton) {
+                 reportingDashButton.addEventListener('click', openReportingModal);
+             }
+
+             // Review Task Modal Submit Button Listener (New)
+             if (reviewTaskSubmitButton) {
+                 reviewTaskSubmitButton.addEventListener('click', handleSubmitReview);
+             }
+
+
+            // --- Initial Setup ---
+            renderEmployeeTaskBoard(); // Render the employee task board initially
+            renderSidebarSkills(); // Render sidebar skills
+            renderSidebarRecentTasks(); // Render sidebar recent tasks
+            adjustTextareaHeight(guidanceInput);
+            adjustTextareaHeight(taskFeedbackInput);
+            showEmployeeView(); // Ensure employee view is shown initially
+
+        }); // End DOMContentLoaded
+    </script>
+
+</body>
+</html>
