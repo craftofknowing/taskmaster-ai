@@ -1,6 +1,5 @@
 # taskmaster-ai
 
-Add the following section to your README to clearly instruct users how to download and use Git LFS files from your repository:
 
 ---
 
