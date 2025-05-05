@@ -4,9 +4,9 @@ TaskMaster-AI is an intelligent task management system designed to empower emplo
 
 ---
 
-## 🚀 Features
+##  Features
 
-### ✅ For Employees
+###  For Employees
 - Visual task board with AI-estimated difficulty (green = easy, red = hard)
 - Mandatory task highlighting (purple)
 - AI-recommended "top choice" tasks
@@ -14,7 +14,7 @@ TaskMaster-AI is an intelligent task management system designed to empower emplo
 - Progress tracking on selected/completed tasks
 - Feedback submission and automatic profile updates
 
-### 📊 For Managers
+### For Managers
 - Dashboard with team performance metrics
 - Summary of internal and cross-functional contributions
 - NLP feedback analysis for completed tasks
@@ -23,7 +23,7 @@ TaskMaster-AI is an intelligent task management system designed to empower emplo
 
 ---
 
-## 🤖 AI Capabilities (Powered by IBM Granite AI)
+## AI Capabilities (Powered by IBM Granite AI)
 
 - Skill inference from unstructured feedback
 - Task description generation and refinement
@@ -34,7 +34,7 @@ TaskMaster-AI is an intelligent task management system designed to empower emplo
 
 ---
 
-## 🧪 Demo (MVP) Overview
+##  Demo (MVP) Overview
 
 The MVP showcases the core loop:
 
@@ -43,11 +43,11 @@ The MVP showcases the core loop:
 - **AI Integration**:
   - Personalized task suggestion
   - Basic NLP feedback analysis
-- **Time Series Simulation**: Visualized predictions of employee engagement
+- **Machine Learning model**: Visualized predictions of task time duration 
 
 ---
 
-## 🧱 Technologies Used
+##  Technologies Used
 
 - **Frontend**: Web interface (React / basic HTML as MVP)
 - **Backend**: Python (Flask/FastAPI)
