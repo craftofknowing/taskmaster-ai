@@ -43,7 +43,8 @@ The MVP showcases the core loop:
 - **AI Integration**:
   - Personalized task suggestion
   - Basic NLP feedback analysis
-- **Machine Learning model**: Visualized predictions of task time duration 
+- **Machine Learning model**: Visualized predictions of task time duration
+- ## Demo Video URL: https://www.youtube.com/watch?v=sJq-1khWvOI
 
 ---
 
